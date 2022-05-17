@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error.middleware";
 import Controller from "./interfaces/controller.interface";
+import morgan from "morgan";
 
 class App {
   public app = express.application;
@@ -33,6 +34,9 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
     this.app.use(cookieParser());
+    this.app.use(
+      morgan(":method :url :status :res[content-length] - :response-time ms")
+    );
   }
 
   private initializeErrorHandling() {
