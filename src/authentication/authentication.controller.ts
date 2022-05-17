@@ -33,11 +33,7 @@ class AuthenticationController implements Controller {
       validationMiddleware(LogInDto),
       this.loggingIn
     );
-    this.router.post(
-      `${this.path}/logout`,
-      validationMiddleware(LogInDto),
-      this.loggingOut
-    );
+    this.router.post(`${this.path}/logout`, this.loggingOut);
   }
 
   private registration = async (
