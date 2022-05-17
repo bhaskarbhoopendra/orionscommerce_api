@@ -33,6 +33,11 @@ class AuthenticationController implements Controller {
       validationMiddleware(LogInDto),
       this.loggingIn
     );
+    this.router.post(
+      `${this.path}/logout`,
+      validationMiddleware(LogInDto),
+      this.loggingOut
+    );
   }
 
   private registration = async (
@@ -74,6 +79,11 @@ class AuthenticationController implements Controller {
     } else {
       next(new WrongCredentialsException());
     }
+  };
+
+  private loggingOut = (request: Request, response: Response) => {
+    response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
+    response.sendStatus(200);
   };
 
   private createCookie(tokenData: TokenData) {
