@@ -1,11 +1,32 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import IProduct from "./product.interface";
+
+const dimensionSchema = new mongoose.Schema({
+  weight: Number,
+  height: Number,
+  width: Number,
+});
+
+const availableSchema = new mongoose.Schema({
+  isAreaCaluclate: Boolean,
+  isCancelable: Boolean,
+  isRefundable: Boolean,
+  isReturnable: Boolean,
+  isCod: Boolean,
+  isGst: Boolean,
+  isAvailable: Boolean,
+  isDeliveryCharges: Boolean,
+});
 
 const productSchema = new mongoose.Schema({
   productName: String,
   price: Number,
   discountedPrice: Number,
   productImage: String,
+  tax: Number,
+  sale_in: String,
+  dimensions: dimensionSchema,
+  avaibality: availableSchema,
 });
 
 const ProductModel = mongoose.model<IProduct & mongoose.Document>(

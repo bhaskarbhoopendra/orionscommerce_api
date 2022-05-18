@@ -1,4 +1,4 @@
-import ProductDTO from "./product.dto";
+import ProductDTO from "./DTO/product.dto";
 import ProductModel from "./product.model";
 
 class ProductService {
@@ -11,6 +11,21 @@ class ProductService {
       price: productData.price,
       discountedPrice: productData.discountedPrice,
       productImage: imagePath,
+      dimensions: {
+        weight: productData.dimensions.weight,
+        height: productData.dimensions.height,
+        width: productData.dimensions.width,
+      },
+      availability: {
+        isAreaCaluclate: productData.availablity.isAreaCaluclate,
+        isCancelable: productData.availablity.isCancelable,
+        isRefundable: productData.availablity.isRefundable,
+        isReturnable: productData.availablity.isReturnable,
+        isCod: productData.availablity.isCod,
+        isGst: productData.availablity.isGst,
+        isAvailable: productData.availablity.isAvailable,
+        isDeliveryCharges: productData.availablity.isDeliveryCharges,
+      },
     });
 
     const product = await newProduct.save();

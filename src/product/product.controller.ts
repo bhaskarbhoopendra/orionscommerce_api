@@ -5,7 +5,7 @@ import multer from "multer";
 import { fileStorage, fileFilter } from "../util/multer";
 import authMiddleware from "../middleware/auth.middleware";
 import ProductService from "./product.service";
-import ProductDTO from "./product.dto";
+import ProductDTO from "./DTO/product.dto";
 
 class ProductController implements Controller {
   public path = "/product";
@@ -43,6 +43,7 @@ class ProductController implements Controller {
       productData,
       imagePath
     );
+    console.log(newProduct);
     response.send(newProduct);
   };
 }
