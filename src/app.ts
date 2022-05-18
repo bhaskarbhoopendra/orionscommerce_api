@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error.middleware";
 import Controller from "./interfaces/controller.interface";
 import morgan from "morgan";
+import clc from "cli-color";
 
 class App {
   public app = express.application;
@@ -20,7 +21,7 @@ class App {
 
   public listen() {
     this.app.listen(process.env.PORT, () => {
-      console.log(`Server is running on ${process.env.PORT}`);
+      console.log(clc.yellow(`Server is running on ${process.env.PORT}`));
     });
   }
 
@@ -48,7 +49,7 @@ class App {
     mongoose
       .connect(`${DATABASE_URI}`)
       .then(() => {
-        console.log("Connected");
+        console.log(clc.green.italic("Connected to db"));
       })
       .catch((err) => {
         console.log(err);

@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Response, Request } from "express";
 import * as jwt from "jsonwebtoken";
 import AuthenticationTokenMissingException from "../excpetions/authenticationTokenMissingException";
 import WrongAuthenticationTokenException from "../excpetions/wrongAuthenticationTokenException";
@@ -7,7 +7,7 @@ import RequestWithUser from "../interfaces/requestWithUser.interface";
 import userModel from "../user/user.model";
 
 async function authMiddleware(
-  request: RequestWithUser,
+  request: RequestWithUser | any,
   response: Response,
   next: NextFunction
 ): Promise<void> {
@@ -23,7 +23,6 @@ async function authMiddleware(
       const user = await userModel.findById(id);
       if (user) {
         request.user = user;
-        console.log(request.user);
         next();
       } else {
         next(new WrongAuthenticationTokenException());

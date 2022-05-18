@@ -1,4 +1,4 @@
-import { Response, Router, Request } from "express";
+import { Response, Router, Request, NextFunction } from "express";
 import Controller from "../interfaces/controller.interface";
 import authMiddleware from "../middleware/auth.middleware";
 import ProductDTO from "./product.dto";
@@ -17,14 +17,18 @@ class ProductController implements Controller {
     this.router.post(`${this.path}/addnew`, authMiddleware, this.getProduct);
   }
 
-  private getProduct = async (req: Request, res: Response) => {
-    const productData: ProductDTO = req.body;
+  private getProduct = async (
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const productData: ProductDTO = request.body;
 
     const newProduct = new this.product(productData);
 
     newProduct.save((err, result) => {
       if (err) console.log(err);
-      res.send(result);
+      response.send(result);
     });
   };
 }
