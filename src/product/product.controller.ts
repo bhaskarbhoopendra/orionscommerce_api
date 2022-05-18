@@ -1,17 +1,20 @@
 import { Request, Response, Router } from "express";
 import Controller from "../interfaces/controller.interface";
-import ProductDTO from "./product.dto";
 import ProductModel from "./product.model";
 import multer from "multer";
 import { fileStorage, fileFilter } from "../util/multer";
+import authMiddleware from "../middleware/auth.middleware";
+import ProductService from "./product.service";
+import ProductDTO from "./product.dto";
+
 class ProductController implements Controller {
   public path = "/product";
   public router = Router();
   public product = ProductModel;
   public multer = multer;
+  public productService = new ProductService();
 
   constructor() {
-    // public product = ProductModel;
     this.initializeRoutes();
   }
 
@@ -19,12 +22,13 @@ class ProductController implements Controller {
     this.router.get(`${this.path}/all`, this.getAllProducts);
     this.router.post(
       `${this.path}/add`,
+      authMiddleware,
       this.upload.single("productImage"),
       this.addNewProduct
     );
   }
 
-  // public upload = this.multer({ dest: "./public/uploads/" });
+  public upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 
   private getAllProducts = async (request: Request, response: Response) => {
     const products = await this.product.find();
@@ -32,20 +36,13 @@ class ProductController implements Controller {
     response.send(products);
   };
 
-  // public upload = multer();
-  public upload = multer({ storage: fileStorage, fileFilter: fileFilter });
-
   private addNewProduct = async (request: Request, response: Response) => {
-    // console.log(request.body);
-    console.log(request.file);
-
-    const newProduct = new this.product({
-      productName: request.body.productName,
-      price: request.body.price,
-      discountedPrice: request.body.discountedPrice,
-      productImage: request.file?.path,
-    });
-    await newProduct.save();
+    const productData: ProductDTO = request.body;
+    const imagePath = request.file?.path;
+    const newProduct = await this.productService.addProduct(
+      productData,
+      imagePath
+    );
     response.send(newProduct);
   };
 }
