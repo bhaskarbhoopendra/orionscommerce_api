@@ -9,6 +9,9 @@ class ProductDTO {
 
   @IsNumber()
   discountedPrice: Number;
+
+  @IsString()
+  productImage: string;
 }
 
 export default ProductDTO;

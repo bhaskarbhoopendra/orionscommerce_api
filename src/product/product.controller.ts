@@ -1,9 +1,7 @@
-import { Response, Router, Request, NextFunction } from "express";
+import { Request, Response, Router } from "express";
 import Controller from "../interfaces/controller.interface";
-import authMiddleware from "../middleware/auth.middleware";
 import ProductDTO from "./product.dto";
 import ProductModel from "./product.model";
-
 class ProductController implements Controller {
   public path = "/product";
   public router = Router();
@@ -14,22 +12,22 @@ class ProductController implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}/addnew`, authMiddleware, this.getProduct);
+    this.router.get(`${this.path}/all`, this.getAllProducts);
+    this.router.post(`${this.path}/add`, this.addNewProduct);
   }
 
-  private getProduct = async (
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) => {
-    const productData: ProductDTO = request.body;
+  private getAllProducts = async (request: Request, response: Response) => {
+    const products = await this.product.find();
+    if (!products) response.send("Nothing Found");
+    response.send(products);
+  };
 
-    const newProduct = new this.product(productData);
+  private addNewProduct = async (request: Request, response: Response) => {
+    console.log(request.body);
 
-    newProduct.save((err, result) => {
-      if (err) console.log(err);
-      response.send(result);
-    });
+    const product = request.body;
+    const newProduct = new this.product(product);
+    response.send(newProduct);
   };
 }
 
