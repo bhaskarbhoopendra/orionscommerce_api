@@ -33,6 +33,8 @@ class App {
     });
   }
 
+  // public upload = multer({ storage: fileStorage, fileFilter: fileFilter });
+
   private initializeMiddleware() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
@@ -42,7 +44,7 @@ class App {
     );
     this.app.use(express.static(`${__dirname}/public`));
     // this.app.use(multer({ storage: fileStorage, fileFilter: fileFilter })
-    // this.app.use(upload.array());
+    // this.app.use(this.upload());
   }
 
   private initializeErrorHandling() {
