@@ -79,7 +79,7 @@ class AuthenticationController implements Controller {
 
   private loggingOut = (request: Request, response: Response) => {
     response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
-    response.sendStatus(200);
+    response.sendStatus(200).send("Logged Out");
   };
 
   private createCookie(tokenData: TokenData) {
