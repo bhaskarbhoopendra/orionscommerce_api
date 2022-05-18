@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Product from "./product.interface";
+import IProduct from "./product.interface";
 
 const productSchema = new mongoose.Schema({
   productName: String,
@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   productImage: String,
 });
 
-const ProductModel = mongoose.model<Product & mongoose.Document>(
+const ProductModel = mongoose.model<IProduct & mongoose.Document>(
   "Product",
   productSchema
 );

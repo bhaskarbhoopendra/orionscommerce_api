@@ -1,8 +1,8 @@
-interface Product {
+interface IProduct {
   productName: String;
   price: Number;
   discountedPrice: Number;
   productImage: string;
 }
 
-export default Product;
+export default IProduct;
