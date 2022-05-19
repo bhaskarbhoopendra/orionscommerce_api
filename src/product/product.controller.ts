@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import Controller from "../interfaces/controller.interface";
 import ProductModel from "./product.model";
 import multer from "multer";
@@ -36,15 +36,26 @@ class ProductController implements Controller {
     response.send(products);
   };
 
-  private addNewProduct = async (request: Request, response: Response) => {
-    const productData: ProductDTO = request.body;
-    const imagePath = request.file?.path;
-    const newProduct = await this.productService.addProduct(
-      productData,
-      imagePath
-    );
-    // console.log(newProduct);
-    response.send(newProduct);
+  private addNewProduct = async (
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const productData: ProductDTO = request.body;
+      const imagePath = request.file?.path;
+      if (!productData)
+        response.sendStatus(400).json({ message: "No data in body" });
+      if (!imagePath)
+        response.sendStatus(400).json({ message: "No File in body" });
+      const newProduct = await this.productService.addProduct(
+        productData,
+        imagePath
+      );
+      response.send(newProduct);
+    } catch (error) {
+      return next(error);
+    }
   };
 }
 

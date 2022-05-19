@@ -18,6 +18,21 @@ const availableSchema = new mongoose.Schema({
   isDeliveryCharges: Boolean,
 });
 
+const casualSchema = new mongoose.Schema({
+  stock: Number,
+  minimumQaunitity: Number,
+  maximumQuantity: Number,
+  unitPerBox: Number,
+  manufacturer: String,
+  madeIn: String,
+});
+
+const volumetricSchema = new mongoose.Schema({
+  isVolumetircWeight: Boolean,
+  upperBound: Number,
+  lowerBound: Number,
+});
+
 const productSchema = new mongoose.Schema({
   productName: String,
   price: Number,
@@ -27,6 +42,9 @@ const productSchema = new mongoose.Schema({
   sale_in: String,
   dimensions: dimensionSchema,
   availability: availableSchema,
+  casuals: casualSchema,
+  SKU: Number,
+  valumetric: volumetricSchema,
 });
 
 const ProductModel = mongoose.model<IProduct & mongoose.Document>(
