@@ -6,6 +6,8 @@ class ProductService {
   constructor() {}
 
   public addProduct = async (productData: ProductDTO, imagePath: any) => {
+    const productAvailability = productData.availability;
+
     let newProduct = new this.product({
       productName: productData.productName,
       price: productData.price,
@@ -16,15 +18,16 @@ class ProductService {
         height: productData.dimensions.height,
         width: productData.dimensions.width,
       },
+
       availability: {
-        isAreaCaluclate: productData.availablity.isAreaCaluclate,
-        isCancelable: productData.availablity.isCancelable,
-        isRefundable: productData.availablity.isRefundable,
-        isReturnable: productData.availablity.isReturnable,
-        isCod: productData.availablity.isCod,
-        isGst: productData.availablity.isGst,
-        isAvailable: productData.availablity.isAvailable,
-        isDeliveryCharges: productData.availablity.isDeliveryCharges,
+        isAreaCalculate: productAvailability.isAreaCalculate,
+        isCancelable: productAvailability.isCancelable,
+        isRefundable: productAvailability.isRefundable,
+        isReturnable: productAvailability.isReturnable,
+        isCod: productAvailability.isCod,
+        isGst: productAvailability.isGst,
+        isAvailable: productAvailability.isAvailable,
+        isDeliveryCharges: productAvailability.isDeliveryCharges,
       },
     });
 

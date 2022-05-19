@@ -1,8 +1,8 @@
-import { IsBoolean } from "class-validator";
+import { IsBoolean, IsString } from "class-validator";
 
 class AvailableDto {
   @IsBoolean()
-  isAreaCaluclate: Boolean;
+  isAreaCalculate: Boolean;
 
   @IsBoolean()
   isCancelable: Boolean;

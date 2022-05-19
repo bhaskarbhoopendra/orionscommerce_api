@@ -43,7 +43,7 @@ class ProductController implements Controller {
       productData,
       imagePath
     );
-    console.log(newProduct);
+    // console.log(newProduct);
     response.send(newProduct);
   };
 }

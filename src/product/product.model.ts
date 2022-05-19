@@ -8,7 +8,7 @@ const dimensionSchema = new mongoose.Schema({
 });
 
 const availableSchema = new mongoose.Schema({
-  isAreaCaluclate: Boolean,
+  isAreaCalculate: Boolean,
   isCancelable: Boolean,
   isRefundable: Boolean,
   isReturnable: Boolean,
@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema({
   tax: Number,
   sale_in: String,
   dimensions: dimensionSchema,
-  avaibality: availableSchema,
+  availability: availableSchema,
 });
 
 const ProductModel = mongoose.model<IProduct & mongoose.Document>(

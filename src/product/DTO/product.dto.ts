@@ -26,7 +26,7 @@ class ProductDTO {
 
   @IsOptional()
   @ValidateNested()
-  availablity: AvailableDto;
+  availability: AvailableDto;
 }
 
 export default ProductDTO;

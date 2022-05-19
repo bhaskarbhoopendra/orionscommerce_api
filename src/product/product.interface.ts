@@ -9,14 +9,14 @@ interface IProduct {
     width: Number;
   };
   availability: {
-    isAreaCaluclate: Boolean;
-    isCancelable: Boolean;
-    isRefundable: Boolean;
-    isReturnable: Boolean;
-    isCod: Boolean;
-    isGst: Boolean;
-    isAvailable: Boolean;
-    isDeliveryCharges: Boolean;
+    isAreaCaluclate: String;
+    // isCancelable: Boolean;
+    // isRefundable: Boolean;
+    // isReturnable: Boolean;
+    // isCod: Boolean;
+    // isGst: Boolean;
+    // isAvailable: Boolean;
+    // isDeliveryCharges: Boolean;
   };
 }
 
