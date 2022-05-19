@@ -5,7 +5,7 @@ import multer from "multer";
 import { fileStorage, fileFilter } from "../util/multer";
 import authMiddleware from "../middleware/auth.middleware";
 import ProductService from "./product.service";
-import ProductDTO from "./DTO/product.dto";
+import ProductDTO from "./Dtos/product.dto";
 import ProdutNotFoundException from "../excpetions/ProductNotFoundException";
 
 class ProductController implements Controller {

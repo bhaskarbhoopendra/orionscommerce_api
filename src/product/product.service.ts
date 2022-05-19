@@ -1,9 +1,9 @@
 import nanoIdGenerator from "../util/nanoId";
-import AvailableDto from "./DTO/availability.dto";
-import CasualDto from "./DTO/casual.dto";
-import DimensionDto from "./DTO/dimension.dto";
-import ProductDTO from "./DTO/product.dto";
-import VolumetricDTO from "./DTO/volumetric.dto";
+import AvailableDto from "./Dtos/availability.dto";
+import CasualDto from "./Dtos/casual.dto";
+import DimensionDto from "./Dtos/dimension.dto";
+import ProductDTO from "./Dtos/product.dto";
+import VolumetricDTO from "./Dtos/volumetric.dto";
 import ProductModel from "./product.model";
 
 class ProductService {
@@ -19,24 +19,21 @@ class ProductService {
     const productName: string = productData.productName;
     console.log(productName.toString);
     console.log(this.nanoId);
-    try {
-      let newProduct = new this.product({
-        productName: productName,
-        price: productData.price,
-        discountedPrice: productData.discountedPrice,
-        productImage: imagePath,
-        dimensions: productDimensions,
-        availability: productAvailability,
-        casuals: casuals,
-        SKU: this.nanoId,
-        valumetric: productVolumetric,
-      });
 
-      const product = await newProduct.save();
-      return product;
-    } catch (error) {
-      console.log(error);
-    }
+    let newProduct = new this.product({
+      productName: productName,
+      price: productData.price,
+      discountedPrice: productData.discountedPrice,
+      productImage: imagePath,
+      dimensions: productDimensions,
+      availability: productAvailability,
+      casuals: casuals,
+      SKU: this.nanoId,
+      valumetric: productVolumetric,
+    });
+
+    const product = await newProduct.save();
+    return product;
   };
 
   public updateSingleProduct = async (

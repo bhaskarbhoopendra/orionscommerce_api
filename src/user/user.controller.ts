@@ -13,13 +13,7 @@ class UserController implements Controller {
   }
 
   private rootUser = async (req: Request, res: Response) => {
-    console.log("------------");
-
-    console.log(req.headers["authorization"]);
-
-    console.log("------------");
-
-    res.send("Hello Hii");
+    res.send("Hii");
   };
 }
 

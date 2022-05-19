@@ -5,6 +5,8 @@ const addressSchema = new mongoose.Schema({
   city: String,
   country: String,
   street: String,
+  pincode: Number,
+  phoneNumber: Number,
 });
 
 const userSchema = new mongoose.Schema(
@@ -12,6 +14,7 @@ const userSchema = new mongoose.Schema(
     address: addressSchema,
     email: String,
     firstName: String,
+
     lastName: String,
     password: {
       type: String,

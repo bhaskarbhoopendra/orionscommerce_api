@@ -1,4 +1,9 @@
-import { IsOptional, IsString, ValidateNested } from "class-validator";
+import {
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from "class-validator";
 import CreateAddressDto from "./address.dto";
 
 class CreateUserDto {

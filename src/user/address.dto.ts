@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 
 class CreateAddressDto {
   @IsString()
@@ -9,6 +9,12 @@ class CreateAddressDto {
 
   @IsString()
   public country: string;
+
+  @IsNumber()
+  pincode: Number;
+
+  @IsNumber()
+  phoneNumber: Number;
 }
 
 export default CreateAddressDto;
