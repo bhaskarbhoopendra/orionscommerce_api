@@ -5,7 +5,7 @@ import WrongCredentialsException from "../excpetions/wrongCredentialsException";
 import Controller from "../interfaces/controller.interface";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import TokenData from "../interfaces/takenData.interface";
-import validationMiddleware from "../middleware/validation.middleware";
+// import validationMiddleware from "../middleware/validation.middleware";
 import CreateUserDto from "../user/user.dto";
 import User from "../user/user.interface";
 import userModel from "../user/user.model";
@@ -25,12 +25,12 @@ class AuthenticationController implements Controller {
   private initializeRoutes() {
     this.router.post(
       `${this.path}/register`,
-      validationMiddleware(CreateUserDto),
+      // validationMiddleware(CreateUserDto),
       this.registration
     );
     this.router.post(
       `${this.path}/login`,
-      validationMiddleware(LogInDto),
+      // validationMiddleware(LogInDto),
       this.loggingIn
     );
     this.router.post(`${this.path}/logout`, this.loggingOut);

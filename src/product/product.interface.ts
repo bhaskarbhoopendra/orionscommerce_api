@@ -1,36 +1,36 @@
 interface IProduct {
-  productName: String;
-  price: Number;
-  discountedPrice: Number;
+  productName: string;
+  price: number;
+  discountedPrice: number;
   productImage: string;
   dimensions: {
-    weight: Number;
-    height: Number;
-    width: Number;
+    weight: number;
+    height: number;
+    width: number;
   };
   availability: {
-    isAreaCaluclate: String;
-    isCancelable: Boolean;
-    isRefundable: Boolean;
-    isReturnable: Boolean;
-    isCod: Boolean;
-    isGst: Boolean;
-    isAvailable: Boolean;
-    isDeliveryCharges: Boolean;
+    isAreaCaluclate: string;
+    isCancelable: boolean;
+    isRefundable: boolean;
+    isReturnable: boolean;
+    isCod: boolean;
+    isGst: boolean;
+    isAvailable: boolean;
+    isDeliveryCharges: boolean;
   };
   casuals: {
-    stock: Number;
-    minimumQaunitity: Number;
-    maximumQuantity: Number;
-    unitPerBox: Number;
-    manufacturer: String;
-    madeIn: String;
+    stock: number;
+    minimumQaunitity: number;
+    maximumQuantity: number;
+    unitPerBox: number;
+    manufacturer: string;
+    madeIn: string;
   };
-  SKU: Number;
+  SKU: number;
   valumetric: {
-    isVolumetircWeight: Boolean;
-    upperBound: Number;
-    lowerBound: Number;
+    isVolumetircWeight: boolean;
+    upperBound: number;
+    lowerBound: number;
   };
 }
 

@@ -14,10 +14,10 @@ class ProductDTO {
   productName: string;
 
   @IsNumber()
-  price: Number;
+  price: number;
 
   @IsNumber()
-  discountedPrice: Number;
+  discountedPrice: number;
 
   @IsString()
   productImage: string;
@@ -36,7 +36,7 @@ class ProductDTO {
 
   @IsOptional()
   @IsNumber()
-  SKU: Number;
+  SKU: number;
 
   @IsOptional()
   @ValidateNested()
