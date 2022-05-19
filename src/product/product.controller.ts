@@ -104,11 +104,3 @@ class ProductController implements Controller {
 }
 
 export default ProductController;
-function IdInterface(
-  productId: string,
-  IdInterface: any,
-  productData: ProductDTO,
-  fileName: string | undefined
-) {
-  throw new Error("Function not implemented.");
-}
