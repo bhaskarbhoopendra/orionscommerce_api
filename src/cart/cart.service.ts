@@ -5,7 +5,11 @@ class CartService {
   constructor() {}
 
   public cartItem = async () => {
-    const carts = await this.cart.find();
+    const carts = await this.cart.find().populate({
+      path: "items.productId",
+      select: " price total",
+    });
+    // console.log(carts[0]);
     return carts[0];
   };
 }

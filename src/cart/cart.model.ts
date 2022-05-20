@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ICart from "./cart.interface";
 
 let ItemSchema = new mongoose.Schema(
   {
@@ -37,6 +38,6 @@ const CartSchema = new mongoose.Schema(
   }
 );
 
-const CartModel = mongoose.model<mongoose.Document>("Cart", CartSchema);
+const CartModel = mongoose.model<ICart & mongoose.Document>("Cart", CartSchema);
 
 export default CartModel;

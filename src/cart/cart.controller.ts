@@ -1,14 +1,18 @@
 import { Router, Request, Response } from "express";
 import Controller from "../interfaces/controller.interface";
+import ProductDTO from "../product/Dtos/product.dto";
+import IProduct from "../product/product.interface";
 import ProductModel from "../product/product.model";
+import ICart from "./cart.interface";
 import CartModel from "./cart.model";
 import CartService from "./cart.service";
+import IItem from "./item.interface";
 
 class CartController implements Controller {
   public path = "/cart";
   public router = Router();
   public cart = CartModel;
-  product = ProductModel;
+  public product = ProductModel;
   cartService = new CartService();
 
   constructor() {
@@ -23,7 +27,8 @@ class CartController implements Controller {
     const { productId } = request.body;
     const quantity = Number.parseInt(request.body.quantity);
     try {
-      let cart = await this.cartService.cartItem();
+      let cart: ICart = await this.cartService.cartItem();
+
       let productDetails = await this.product.findById(productId);
       if (!productDetails) {
         return response.status(500).json({
@@ -31,11 +36,12 @@ class CartController implements Controller {
           msg: "Invalid request",
         });
       }
+
       //--If Cart Exists ----
       if (cart) {
         //---- Check if index exists ----
         const indexFound = cart.items.findIndex(
-          (item) => item.productId.id == productId
+          (item: any): boolean => item.productId._id == productId
         );
 
         //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
@@ -45,8 +51,8 @@ class CartController implements Controller {
             cart.subTotal = 0;
           } else {
             cart.subTotal = cart.items
-              .map((item) => item.total)
-              .reduce((acc, next) => acc + next);
+              .map((item: IItem): number => item.total)
+              .reduce((acc: number, next: number) => acc + next);
           }
         }
         //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
@@ -57,8 +63,8 @@ class CartController implements Controller {
             cart.items[indexFound].quantity * productDetails.price;
           cart.items[indexFound].price = productDetails.price;
           cart.subTotal = cart.items
-            .map((item) => item.total)
-            .reduce((acc, next) => acc + next);
+            .map((item: IItem): number => item.total)
+            .reduce((acc: number, next: number) => acc + next);
         }
         //----Check if quantity is greater than 0 then add item to items array ----
         else if (quantity > 0) {
@@ -69,8 +75,8 @@ class CartController implements Controller {
             total: parseInt(productDetails.price * quantity),
           });
           cart.subTotal = cart.items
-            .map((item) => item.total)
-            .reduce((acc, next) => acc + next);
+            .map((item: IItem): number => item.total)
+            .reduce((acc: number, next: number) => acc + next);
         }
         //----If quantity of price is 0 throw the error -------
         else {
@@ -103,6 +109,7 @@ class CartController implements Controller {
         const cart = new this.cart({
           ...cartData,
         });
+        await cart.save();
         // cart = await this.cart.save(cartData);
         // let data = await cart.save();
         response.json(cart);
