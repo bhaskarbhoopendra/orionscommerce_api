@@ -1,12 +1,8 @@
 import { Router, Request, Response } from "express";
 import Controller from "../interfaces/controller.interface";
-import ProductDTO from "../product/Dtos/product.dto";
-import IProduct from "../product/product.interface";
 import ProductModel from "../product/product.model";
-import ICart from "./cart.interface";
 import CartModel from "./cart.model";
 import CartService from "./cart.service";
-import IItem from "./item.interface";
 
 class CartController implements Controller {
   public path = "/cart";
@@ -20,15 +16,15 @@ class CartController implements Controller {
   }
 
   public initializeCartRoutes() {
-    this.router.post(`${this.path}/add`, this.addTocart);
+    this.router.post(`${this.path}/addin`, this.addTocart);
   }
 
   public addTocart = async (request: Request, response: Response) => {
     const { productId } = request.body;
     const quantity = Number.parseInt(request.body.quantity);
     try {
-      let cart: ICart = await this.cartService.cartItem();
-
+      //  add item to cart and increase quantity of product
+      let cart = await this.cartService.cartItem();
       let productDetails = await this.product.findById(productId);
       if (!productDetails) {
         return response.status(500).json({
@@ -36,6 +32,33 @@ class CartController implements Controller {
           msg: "Invalid request",
         });
       }
+
+      if (cart) {
+        // check if the index of product exists
+        const productIdExitstInCart = (item: any): void => {
+          item.productId._id == productId;
+        };
+
+        const productFoundIndex = cart.items.findIndex(productIdExitstInCart);
+        console.log(productFoundIndex);
+      }
+
+      const updatedCart = {
+        items: [
+          {
+            productId: productId,
+            quantity: quantity,
+            price: productDetails.price,
+            total: productDetails.price * quantity,
+          },
+        ],
+        subTotal: productDetails.price * quantity,
+      };
+      console.log(updatedCart);
+      const newCartData = new this.cart({ ...updatedCart });
+      // await newCartData.save();
+      console.log(newCartData);
+      // response.send(newCartData);
 
       //     //--If Cart Exists ----
       //     if (cart) {
