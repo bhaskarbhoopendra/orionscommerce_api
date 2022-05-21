@@ -64,7 +64,7 @@ class ProductController implements Controller {
       );
       response.send(newProduct);
     } catch (error) {
-      return next(error);
+      return error;
     }
   };
 
