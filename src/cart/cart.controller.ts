@@ -22,6 +22,7 @@ class CartController implements Controller {
   public initializeCartRoutes() {
     this.router.post(`${this.path}/addin`, this.addTocart);
     this.router.get(`${this.path}/get`, this.getCart);
+    this.router.post(`${this.path}/get`, this.tst);
   }
 
   public addTocart = async (request: Request, response: Response) => {
@@ -46,6 +47,14 @@ class CartController implements Controller {
         msg: "Something went wrong",
         err: err,
       });
+    }
+  };
+  public tst = async (request: Request, response: Response) => {
+    console.log(request.xhr);
+    let data = "";
+    if (request.body.name) {
+      data += "b";
+      response.send(data);
     }
   };
 
