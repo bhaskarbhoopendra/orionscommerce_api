@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -6,15 +6,17 @@ import errorHandler from "./middleware/error.middleware";
 import Controller from "./interfaces/controller.interface";
 import morgan from "morgan";
 import clc from "cli-color";
+import cors from "cors";
 import multer from "multer";
 import { fileFilter, fileStorage } from "./util/multer";
 
 class App {
   public app = express.application;
+  public router = express.Router();
 
   constructor(controllers: Controller[]) {
     this.app = express();
-
+    this.app.use(cors());
     this.connectToDatabase();
     this.initializeMiddleware();
     this.initializeErrorHandling();
@@ -33,8 +35,6 @@ class App {
     });
   }
 
-  // public upload = multer({ storage: fileStorage, fileFilter: fileFilter });
-
   private initializeMiddleware() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
@@ -43,8 +43,6 @@ class App {
       morgan(":method :url :status :res[content-length] - :response-time ms")
     );
     this.app.use(express.static(`${__dirname}/public`));
-    // this.app.use(multer({ storage: fileStorage, fileFilter: fileFilter })
-    // this.app.use(this.upload());
   }
 
   private initializeErrorHandling() {
