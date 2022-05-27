@@ -1,14 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error.middleware";
 import Controller from "./interfaces/controller.interface";
 import morgan from "morgan";
 import clc from "cli-color";
 import cors from "cors";
-import multer from "multer";
-import { fileFilter, fileStorage } from "./util/multer";
 
 class App {
   public app = express.application;

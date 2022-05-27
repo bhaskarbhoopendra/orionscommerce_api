@@ -8,7 +8,7 @@ interface IProduct {
     height: number;
     width: number;
   };
-  availability: {
+  availability?: {
     isAreaCaluclate: string;
     isCancelable: boolean;
     isRefundable: boolean;

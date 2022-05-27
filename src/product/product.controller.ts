@@ -7,13 +7,14 @@ import authMiddleware from "../middleware/auth.middleware";
 import ProductService from "./product.service";
 import ProductDTO from "./Dtos/product.dto";
 import ProdutNotFoundException from "../excpetions/ProductNotFoundException";
+import ProductRepository from "./product.repository";
 
 class ProductController implements Controller {
   public path = "/product";
   public router = Router();
-  public product = ProductModel;
   public multer = multer;
   public productService = new ProductService();
+  public productRepository = new ProductRepository();
 
   constructor() {
     this.initializeRoutes();
@@ -36,12 +37,18 @@ class ProductController implements Controller {
       this.upload.single("productImage"),
       this.updateSingleProduct
     );
+
+    this.router.delete(
+      `${this.path}/delete/:id`,
+      authMiddleware,
+      this.deleteProduct
+    );
   }
 
   public upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 
   private getAllProducts = async (request: Request, response: Response) => {
-    const products = await this.product.find();
+    const products = await this.productRepository.getAllProduct();
     if (!products) response.send("Nothing Found");
     response.send(products);
   };
@@ -74,7 +81,7 @@ class ProductController implements Controller {
     next: NextFunction
   ) => {
     const id = request.params.id;
-    const foundProduct = await this.product.findById(id);
+    const foundProduct = await this.productRepository.productByID(id);
     if (!foundProduct) next(new ProdutNotFoundException(id));
     response.send(foundProduct);
   };
@@ -88,8 +95,8 @@ class ProductController implements Controller {
       const productId = request.params.id;
       const productData: ProductDTO = request.body;
       const fileName = request.file?.filename;
-      if (!productId) next(new ProdutNotFoundException(productId));
-      if (!productData) next(new ProdutNotFoundException(productId));
+      if (!productId) throw new ProdutNotFoundException(productId);
+      if (!productData) throw new ProdutNotFoundException(productId);
       const updatedProduct = this.productService.updateSingleProduct(
         productId,
         productData,
@@ -100,6 +107,11 @@ class ProductController implements Controller {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  public deleteProduct = async (request: Request, response: Response) => {
+    const productId = request.params;
+    return this.productRepository.productByIdAndDelete(productId);
   };
 }
 

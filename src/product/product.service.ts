@@ -5,10 +5,12 @@ import DimensionDto from "./Dtos/dimension.dto";
 import ProductDTO from "./Dtos/product.dto";
 import VolumetricDTO from "./Dtos/volumetric.dto";
 import ProductModel from "./product.model";
+import ProductRepository from "./product.repository";
 
 class ProductService {
   public product = ProductModel;
   public nanoId = nanoIdGenerator();
+  public productRepository = new ProductRepository();
   constructor() {}
 
   public addProduct = async (productData: ProductDTO, imagePath: any) => {
@@ -57,8 +59,9 @@ class ProductService {
       SKU: productData.SKU,
       valumetric: productVolumetric,
     };
-
-    await this.product.findByIdAndUpdate(productId, { $set: upDatedProduct });
+    await this.productRepository.productByIdAndUpdate(productId, {
+      $set: upDatedProduct,
+    });
     return "Product Updated";
   };
 }
