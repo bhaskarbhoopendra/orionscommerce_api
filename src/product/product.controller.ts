@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
 import Controller from "../interfaces/controller.interface";
-import ProductModel from "./product.model";
 import multer from "multer";
 import { fileStorage, fileFilter } from "../util/multer";
 import authMiddleware from "../middleware/auth.middleware";
