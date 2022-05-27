@@ -7,12 +7,14 @@ import ICart from "./cart.interface";
 import ProdutNotFoundException from "../excpetions/ProductNotFoundException";
 
 import CartNotFoundException from "../excpetions/CartNotFoundException";
+import ProductRepository from "../product/product.repository";
 
 class CartController implements Controller {
   public path = "/cart";
   public router = Router();
   public cart = CartModel;
   public product = ProductModel;
+  public productRepository = new ProductRepository();
   cartService = new CartService();
 
   constructor() {
@@ -22,7 +24,6 @@ class CartController implements Controller {
   public initializeCartRoutes() {
     this.router.post(`${this.path}/addin`, this.addTocart);
     this.router.get(`${this.path}/get`, this.getCart);
-    this.router.post(`${this.path}/get`, this.tst);
   }
 
   public addTocart = async (request: Request, response: Response) => {
@@ -30,7 +31,7 @@ class CartController implements Controller {
     const quantity: number = Number(request.body.quantity);
     try {
       let cart: ICart = await this.cartService.cartItem();
-      let productDetails = await this.product.findById(productId);
+      let productDetails = await this.productRepository.productByID(productId);
       if (!productDetails) throw new ProdutNotFoundException(productId);
 
       const newCartData = await this.cartService.addTocart(
@@ -47,14 +48,6 @@ class CartController implements Controller {
         msg: "Something went wrong",
         err: err,
       });
-    }
-  };
-  public tst = async (request: Request, response: Response) => {
-    console.log(request.xhr);
-    let data = "";
-    if (request.body.name) {
-      data += "b";
-      response.send(data);
     }
   };
 
