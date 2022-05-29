@@ -4,6 +4,7 @@ import AuthenticationTokenMissingException from "../excpetions/authenticationTok
 import WrongAuthenticationTokenException from "../excpetions/wrongAuthenticationTokenException";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
+import { Role } from "../user/roles.enum";
 import userModel from "../user/user.model";
 
 async function authMiddleware(
@@ -20,8 +21,9 @@ async function authMiddleware(
         `${JWT_SECRET}`
       ) as DataStoredInToken;
       const id = verificationResponse._id;
+
       const user = await userModel.findById(id);
-      if (user) {
+      if (user && user.role == "ADMIN") {
         request.user = user;
         next();
       } else {
@@ -36,3 +38,13 @@ async function authMiddleware(
 }
 
 export default authMiddleware;
+
+// export function isAdmin(
+//   request: RequestWithUser | any,
+//   response: Response,
+//   next: NextFunction
+// ) {
+//   if (request.user.role == "ADMIN") {
+//     next();
+//   }
+// }

@@ -1,10 +1,12 @@
 import {
+  IsEnum,
   IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
 } from "class-validator";
 import CreateAddressDto from "./address.dto";
+import { Role } from "./roles.enum";
 
 class CreateUserDto {
   @IsString()
@@ -18,6 +20,9 @@ class CreateUserDto {
 
   @IsString()
   public password: string;
+
+  @IsEnum(Role)
+  public role: Role;
 
   @IsOptional()
   @ValidateNested()

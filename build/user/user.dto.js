@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
+const roles_enum_1 = require("./roles.enum");
 class CreateUserDto {
 }
 __decorate([
@@ -21,6 +22,9 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)()
 ], CreateUserDto.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(roles_enum_1.Role)
+], CreateUserDto.prototype, "role", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.ValidateNested)()
