@@ -5,6 +5,7 @@ import adminMiddleware from "../middleware/admin.middleware";
 import VendorModel from "../vendor/vendor.model";
 import VerifiedStatus from "../enums/enums.vendor";
 import Warehouse from "../warehouse/warehouse.model";
+import WarehouseNotFoundException from "../excpetions/WarehouseNotFoundException";
 
 class AdminController implements Controller {
   public path = "/admin/process";
@@ -25,6 +26,12 @@ class AdminController implements Controller {
       `${this.path}/verify/warehouse/:vendorId/:warehouseId`,
       adminMiddleware,
       this.verifyVendorWarehouse
+    );
+
+    this.router.get(
+      `${this.path}/getonevendor/:id`,
+
+      this.getOneVendor
     );
   }
 
@@ -50,9 +57,43 @@ class AdminController implements Controller {
     response: Response
   ) => {
     const { vendorId, warehouseId } = request.params;
-    const foundVendor = await this.vendor.findById(vendorId);
-    const foundWarehouse = await this.warehouse.findById(warehouseId);
-    response.send({ foundVendor, foundWarehouse });
+    try {
+      const foundVendor = await this.vendor.findById(vendorId);
+      if (!foundVendor) throw new VendorNotFoundException(vendorId);
+      const foundWarehouse = await this.warehouse.findById(warehouseId);
+      if (!foundWarehouse) throw new WarehouseNotFoundException(warehouseId);
+
+      if (
+        foundVendor.isConfirmedVendor == VerifiedStatus.CONFIRMED &&
+        foundVendor.id == foundWarehouse.vendor
+      ) {
+        const confirmedWarehouse = await this.warehouse.findByIdAndUpdate(
+          warehouseId,
+          {
+            isVerifiedWarehouse: VerifiedStatus.CONFIRMED,
+          },
+          { new: true }
+        );
+
+        foundVendor.warehouse.push(warehouseId);
+        foundVendor.save();
+        response.send({ foundVendor, confirmedWarehouse });
+      }
+      console.log("Something went wrong");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  private getOneVendor = async (request: Request, response: Response) => {
+    const vendorId = request.params.id;
+    try {
+      const foundVendor = await this.vendor.findById(vendorId);
+      if (!foundVendor) throw new VendorNotFoundException(vendorId);
+      response.send(foundVendor);
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

@@ -6,7 +6,7 @@ interface Ivendor extends User {
   company?: string;
   isVendor: boolean;
   isConfirmedVendor?: string;
-  warehouse?: Types.ObjectId;
+  warehouse?: string[];
   execPopulate(): any;
 }
 
