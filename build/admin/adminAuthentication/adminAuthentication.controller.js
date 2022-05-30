@@ -26,38 +26,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bcrypt = __importStar(require("bcrypt"));
 const express_1 = require("express");
+const bcrypt = __importStar(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
-const wrongCredentialsException_1 = __importDefault(require("../excpetions/wrongCredentialsException"));
-const user_model_1 = __importDefault(require("../user/user.model"));
-const authentication_service_1 = __importDefault(require("./authentication.service"));
-class AuthenticationController {
+const admin_model_1 = __importDefault(require("./admin.model"));
+const admin_authenticate_service_1 = __importDefault(require("./admin.authenticate.service"));
+const wrongCredentialsException_1 = __importDefault(require("../../excpetions/wrongCredentialsException"));
+class AdminAuthenticationController {
     constructor() {
-        this.path = "/auth";
+        this.path = "/admin";
         this.router = (0, express_1.Router)();
-        this.authenticationService = new authentication_service_1.default();
-        this.user = user_model_1.default;
-        this.registration = async (request, response, next) => {
-            const userData = request.body;
+        this.admin = admin_model_1.default;
+        this.adminAuthenticateService = new admin_authenticate_service_1.default();
+        this.adminRegister = async (request, response, next) => {
+            const adminData = request.body;
             try {
-                const { cookie, user } = await this.authenticationService.register(userData);
+                const { cookie, admin } = await this.adminAuthenticateService.register(adminData);
                 response.setHeader("Set-Cookie", [cookie]);
-                response.send(user);
+                response.send(admin);
             }
             catch (error) {
                 next(error);
             }
         };
-        this.loggingIn = async (request, response, next) => {
+        this.adminLogin = async (request, response, next) => {
             const logInData = request.body;
-            const user = await this.user.findOne({ email: logInData.email });
-            if (user) {
-                const isPasswordMatching = await bcrypt.compare(logInData.password, user.get("password", null, { getters: false }));
+            const vendor = await this.admin.findOne({ email: logInData.email });
+            if (vendor) {
+                const isPasswordMatching = await bcrypt.compare(logInData.password, vendor.get("password", null, { getters: false }));
                 if (isPasswordMatching) {
-                    const tokenData = this.createToken(user);
+                    const tokenData = this.createToken(vendor);
                     response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-                    response.send({ tokenData, user });
+                    response.send({ tokenData, user: vendor });
                 }
                 else {
                     next(new wrongCredentialsException_1.default());
@@ -67,29 +67,20 @@ class AuthenticationController {
                 next(new wrongCredentialsException_1.default());
             }
         };
-        this.loggingOut = (request, response) => {
-            response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
-            response.sendStatus(200).send("Logged Out");
-        };
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.post(`${this.path}/register`, 
-        // validationMiddleware(CreateUserDto),
-        this.registration);
-        this.router.post(`${this.path}/login`, 
-        // validationMiddleware(LogInDto),
-        this.loggingIn);
-        this.router.post(`${this.path}/logout`, this.loggingOut);
+        this.router.post(`${this.path}/register`, this.adminRegister);
+        this.router.post(`${this.path}/login`, this.adminLogin);
     }
     createCookie(tokenData) {
         return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
     }
-    createToken(user) {
+    createToken(admin) {
         const expiresIn = 60 * 60; // an hour
         const { JWT_SECRET } = process.env;
         const dataStoredInToken = {
-            _id: user._id,
+            _id: admin._id,
         };
         return {
             expiresIn,
@@ -97,4 +88,4 @@ class AuthenticationController {
         };
     }
 }
-exports.default = AuthenticationController;
+exports.default = AdminAuthenticationController;

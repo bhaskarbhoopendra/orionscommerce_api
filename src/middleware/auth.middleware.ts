@@ -20,6 +20,7 @@ async function authMiddleware(
         `${JWT_SECRET}`
       ) as DataStoredInToken;
       const id = verificationResponse._id;
+
       const user = await userModel.findById(id);
       if (user) {
         request.user = user;
@@ -36,3 +37,13 @@ async function authMiddleware(
 }
 
 export default authMiddleware;
+
+// export function isAdmin(
+//   request: RequestWithUser | any,
+//   response: Response,
+//   next: NextFunction
+// ) {
+//   if (request.user.role == "ADMIN") {
+//     next();
+//   }
+// }

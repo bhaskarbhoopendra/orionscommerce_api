@@ -23,8 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.addressSchema = void 0;
 const mongoose = __importStar(require("mongoose"));
-const addressSchema = new mongoose.Schema({
+exports.addressSchema = new mongoose.Schema({
     city: String,
     country: String,
     street: String,
@@ -32,7 +33,7 @@ const addressSchema = new mongoose.Schema({
     phoneNumber: Number,
 });
 const userSchema = new mongoose.Schema({
-    address: addressSchema,
+    address: exports.addressSchema,
     email: String,
     firstName: String,
     lastName: String,

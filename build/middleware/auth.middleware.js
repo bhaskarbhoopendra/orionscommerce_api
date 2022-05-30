@@ -55,3 +55,12 @@ async function authMiddleware(request, response, next) {
     }
 }
 exports.default = authMiddleware;
+// export function isAdmin(
+//   request: RequestWithUser | any,
+//   response: Response,
+//   next: NextFunction
+// ) {
+//   if (request.user.role == "ADMIN") {
+//     next();
+//   }
+// }

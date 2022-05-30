@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsEnum, IsNumber, IsString } from "class-validator";
 
 class CreateAddressDto {
   @IsString()
