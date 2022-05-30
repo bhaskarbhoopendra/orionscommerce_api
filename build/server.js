@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
+const admin_controller_1 = __importDefault(require("./admin/admin.controller"));
+const adminAuthentication_controller_1 = __importDefault(require("./admin/adminAuthentication/adminAuthentication.controller"));
 const app_1 = __importDefault(require("./app"));
 const authentication_controller_1 = __importDefault(require("./authentication/authentication.controller"));
 const cart_controller_1 = __importDefault(require("./cart/cart.controller"));
@@ -16,5 +18,7 @@ const app = new app_1.default([
     new product_controller_1.default(),
     new cart_controller_1.default(),
     new vendor_authentication_controller_1.default(),
+    new adminAuthentication_controller_1.default(),
+    new admin_controller_1.default(),
 ]);
 app.listen();

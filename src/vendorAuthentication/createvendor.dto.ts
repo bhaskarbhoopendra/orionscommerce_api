@@ -1,5 +1,6 @@
-import { IsBoolean, IsString } from "class-validator";
+import { IsBoolean, IsEnum, IsString } from "class-validator";
 import CreateUserDto from "../user/user.dto";
+import StatusOfVendorEnum from "./enums.vendor";
 
 class CreatevendorDto extends CreateUserDto {
   @IsString()
@@ -8,8 +9,8 @@ class CreatevendorDto extends CreateUserDto {
   @IsString()
   company?: string;
 
-  @IsBoolean()
-  isConfirmedvendor: boolean;
+  @IsEnum(StatusOfVendorEnum)
+  isConfirmedvendor?: StatusOfVendorEnum;
 
   @IsBoolean()
   isVendor: boolean;

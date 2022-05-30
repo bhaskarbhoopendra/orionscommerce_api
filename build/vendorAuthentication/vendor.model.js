@@ -13,7 +13,7 @@ const vendorSchema = new mongoose_1.default.Schema({
     organization: String,
     company: String,
     isVendor: Boolean,
-    isConfirmedVendor: Boolean,
+    isConfirmedVendor: { enum: ["confirmed", "pending"] },
     password: String,
 });
 vendorSchema.virtual("fullName").get(function () {

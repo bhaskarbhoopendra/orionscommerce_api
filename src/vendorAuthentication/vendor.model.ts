@@ -10,7 +10,7 @@ const vendorSchema = new mongoose.Schema({
   organization: String,
   company: String,
   isVendor: Boolean,
-  isConfirmedVendor: Boolean, //confirmed from admin
+  isConfirmedVendor: { enum: ["confirmed", "pending"] }, //confirmed from admin
   password: String,
 });
 

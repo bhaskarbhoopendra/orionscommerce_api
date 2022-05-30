@@ -4,7 +4,7 @@ interface Ivendor extends User {
   organization?: string;
   company?: string;
   isVendor: boolean;
-  isConfirmedvendor?: boolean;
+  isConfirmedvendor?: string;
 }
 
 export default Ivendor;

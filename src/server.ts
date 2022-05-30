@@ -1,4 +1,6 @@
 import "dotenv/config";
+import AdminController from "./admin/admin.controller";
+import AdminAuthenticationController from "./admin/adminAuthentication/adminAuthentication.controller";
 
 import App from "./app";
 import AuthenticationController from "./authentication/authentication.controller";
@@ -13,6 +15,8 @@ const app = new App([
   new ProductController(),
   new CartController(),
   new VendorAuthenticationController(),
+  new AdminAuthenticationController(),
+  new AdminController(),
 ]);
 
 app.listen();
