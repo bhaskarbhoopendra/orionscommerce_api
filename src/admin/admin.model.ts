@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Iadmin from "./admin.interface";
+import Iadmin from "./adminAuthentication/admin.interface";
 
 const adminSchema = new mongoose.Schema({
   email: String,

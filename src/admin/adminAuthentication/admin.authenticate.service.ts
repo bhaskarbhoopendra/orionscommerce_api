@@ -3,7 +3,7 @@ import TokenData from "../../interfaces/takenData.interface";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import DataStoredInToken from "../../interfaces/dataStoredInToken.interface";
-import AdminModel from "./admin.model";
+import AdminModel from "../admin.model";
 import CreateAdminDto from "./createAdmin.dto";
 import Iadmin from "./admin.interface";
 
