@@ -7,6 +7,10 @@ const vendorSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   email: String,
+  organization: String,
+  company: String,
+  isVendor: Boolean,
+  isConfirmedVendor: Boolean, //confirmed from admin
   password: String,
 });
 

@@ -1,16 +1,10 @@
-interface Ivendor {
-  _id: string;
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  password: string;
-  address?: {
-    street?: string;
-    city?: string;
-    pincode?: Number;
-    phoneNumber?: Number;
-    country?: string;
-  };
+import User from "../user/user.interface";
+
+interface Ivendor extends User {
+  organization?: string;
+  company?: string;
+  isVendor: boolean;
+  isConfirmedvendor?: boolean;
 }
 
 export default Ivendor;

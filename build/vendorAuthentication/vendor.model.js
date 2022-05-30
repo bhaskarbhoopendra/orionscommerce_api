@@ -10,6 +10,10 @@ const vendorSchema = new mongoose_1.default.Schema({
     firstName: String,
     lastName: String,
     email: String,
+    organization: String,
+    company: String,
+    isVendor: Boolean,
+    isConfirmedVendor: Boolean,
     password: String,
 });
 vendorSchema.virtual("fullName").get(function () {
