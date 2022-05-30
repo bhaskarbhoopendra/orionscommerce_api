@@ -38,7 +38,7 @@ async function authMiddleware(request, response, next) {
             const verificationResponse = jwt.verify(cookies.Authorization, `${JWT_SECRET}`);
             const id = verificationResponse._id;
             const user = await user_model_1.default.findById(id);
-            if (user && user.role == "ADMIN") {
+            if (user) {
                 request.user = user;
                 next();
             }

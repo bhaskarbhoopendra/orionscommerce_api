@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
-const roles_enum_1 = require("./roles.enum");
 class CreateAddressDto {
 }
 __decorate([
@@ -25,7 +24,4 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsNumber)()
 ], CreateAddressDto.prototype, "phoneNumber", void 0);
-__decorate([
-    (0, class_validator_1.IsEnum)(roles_enum_1.Role)
-], CreateAddressDto.prototype, "role", void 0);
 exports.default = CreateAddressDto;

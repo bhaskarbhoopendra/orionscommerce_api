@@ -1,5 +1,4 @@
 import { IsEnum, IsNumber, IsString } from "class-validator";
-import { Role } from "./roles.enum";
 
 class CreateAddressDto {
   @IsString()
@@ -16,9 +15,6 @@ class CreateAddressDto {
 
   @IsNumber()
   phoneNumber: Number;
-
-  @IsEnum(Role)
-  role: Role;
 }
 
 export default CreateAddressDto;

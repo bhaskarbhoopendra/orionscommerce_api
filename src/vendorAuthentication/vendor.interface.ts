@@ -1,4 +1,4 @@
-interface User {
+interface Ivendor {
   _id: string;
   firstName?: string;
   lastName?: string;
@@ -13,4 +13,4 @@ interface User {
   };
 }
 
-export default User;
+export default Ivendor;

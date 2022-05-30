@@ -15,11 +15,7 @@ const userSchema = new mongoose.Schema(
     email: String,
     firstName: String,
     lastName: String,
-    role: {
-      type: String,
-      enum: ["USER", "ADMIN", "VENDOR"],
-      default: "user",
-    },
+
     password: {
       type: String,
       get: (): undefined => undefined,

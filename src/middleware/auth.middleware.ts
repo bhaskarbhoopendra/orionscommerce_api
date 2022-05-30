@@ -4,7 +4,6 @@ import AuthenticationTokenMissingException from "../excpetions/authenticationTok
 import WrongAuthenticationTokenException from "../excpetions/wrongAuthenticationTokenException";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import RequestWithUser from "../interfaces/requestWithUser.interface";
-import { Role } from "../user/roles.enum";
 import userModel from "../user/user.model";
 
 async function authMiddleware(
@@ -23,7 +22,7 @@ async function authMiddleware(
       const id = verificationResponse._id;
 
       const user = await userModel.findById(id);
-      if (user && user.role == "ADMIN") {
+      if (user) {
         request.user = user;
         next();
       } else {
