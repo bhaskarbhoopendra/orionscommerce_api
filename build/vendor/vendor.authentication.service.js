@@ -26,35 +26,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userWithThatEmailAlreadyExistsException_1 = __importDefault(require("../../excpetions/userWithThatEmailAlreadyExistsException"));
+const userWithThatEmailAlreadyExistsException_1 = __importDefault(require("../excpetions/userWithThatEmailAlreadyExistsException"));
+const vendor_model_1 = __importDefault(require("./vendor.model"));
 const bcrypt = __importStar(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
-const admin_model_1 = __importDefault(require("../admin.model"));
-class AdminauthenticateService {
+class VendorAuthenticationService {
     constructor() {
-        this.admin = admin_model_1.default;
+        this.vendor = vendor_model_1.default;
     }
-    async register(adminData) {
-        if (await this.admin.findOne({ email: adminData.email })) {
-            throw new userWithThatEmailAlreadyExistsException_1.default(adminData.email);
+    async register(vendorData) {
+        if (await this.vendor.findOne({ email: vendorData.email })) {
+            throw new userWithThatEmailAlreadyExistsException_1.default(vendorData.email);
         }
-        const hashedPassword = await bcrypt.hash(adminData.password, 10);
-        const admin = await this.admin.create(Object.assign(Object.assign({}, adminData), { password: hashedPassword }));
-        const tokenData = this.createToken(admin);
+        const hashedPassword = await bcrypt.hash(vendorData.password, 10);
+        const vendor = await this.vendor.create(Object.assign(Object.assign({}, vendorData), { password: hashedPassword }));
+        const tokenData = this.createToken(vendor);
         const cookie = this.createCookie(tokenData);
         return {
             cookie,
-            admin,
+            vendor,
         };
     }
     createCookie(tokenData) {
         return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
     }
-    createToken(admin) {
+    createToken(vendor) {
         const expiresIn = 60 * 60; // an hour
         const { JWT_SECRET } = process.env;
         const dataStoredInToken = {
-            _id: admin._id,
+            _id: vendor._id,
         };
         return {
             expiresIn,
@@ -62,4 +62,4 @@ class AdminauthenticateService {
         };
     }
 }
-exports.default = AdminauthenticateService;
+exports.default = VendorAuthenticationService;

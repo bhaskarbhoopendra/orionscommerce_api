@@ -11,7 +11,7 @@ const authentication_controller_1 = __importDefault(require("./authentication/au
 const cart_controller_1 = __importDefault(require("./cart/cart.controller"));
 const product_controller_1 = __importDefault(require("./product/product.controller"));
 const user_controller_1 = __importDefault(require("./user/user.controller"));
-const vendor_authentication_controller_1 = __importDefault(require("./vendorAuthentication/vendor.authentication.controller"));
+const vendor_authentication_controller_1 = __importDefault(require("./vendor/vendor.authentication.controller"));
 const app = new app_1.default([
     new user_controller_1.default(),
     new authentication_controller_1.default(),

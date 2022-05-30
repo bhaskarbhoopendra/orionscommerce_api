@@ -7,7 +7,7 @@ import AuthenticationController from "./authentication/authentication.controller
 import CartController from "./cart/cart.controller";
 import ProductController from "./product/product.controller";
 import UserController from "./user/user.controller";
-import VendorAuthenticationController from "./vendorAuthentication/vendor.authentication.controller";
+import VendorAuthenticationController from "./vendor/vendor.authentication.controller";
 
 const app = new App([
   new UserController(),

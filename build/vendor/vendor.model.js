@@ -7,19 +7,17 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const user_model_1 = require("../user/user.model");
 const vendorSchema = new mongoose_1.default.Schema({
     address: user_model_1.addressSchema,
-    email: String,
     firstName: String,
     lastName: String,
+    email: String,
+    organization: String,
+    company: String,
     isVendor: Boolean,
-    password: {
-        type: String,
-        get: () => undefined,
-    },
-}, {
-    toJSON: {
-        virtuals: true,
-        getters: true,
-    },
+    isConfirmedVendor: { enum: ["confirmed", "pending"] },
+    password: String,
 });
-const vendorModel = mongoose_1.default.model("Vendor", vendorSchema);
-exports.default = vendorModel;
+vendorSchema.virtual("fullName").get(function () {
+    return `${this.firstName} ${this.lastName}`;
+});
+const VendorModel = mongoose_1.default.model("Vendor", vendorSchema);
+exports.default = VendorModel;
