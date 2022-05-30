@@ -14,10 +14,10 @@ const vendorSchema = new mongoose_1.default.Schema({
     company: String,
     isVendor: Boolean,
     isConfirmedVendor: { enum: ["confirmed", "pending"] },
-    password: String,
-});
-vendorSchema.virtual("fullName").get(function () {
-    return `${this.firstName} ${this.lastName}`;
+    password: {
+        type: String,
+        get: () => undefined,
+    },
 });
 const VendorModel = mongoose_1.default.model("Vendor", vendorSchema);
 exports.default = VendorModel;

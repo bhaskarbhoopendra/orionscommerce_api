@@ -2,8 +2,8 @@ import { Router, Request, Response, NextFunction } from "express";
 import VendorNotFoundException from "../excpetions/VendorNotFoundException";
 import Controller from "../interfaces/controller.interface";
 import adminMiddleware from "../middleware/admin.middleware";
-import StatusOfVendorEnum from "../vendor/enums.vendor";
 import VendorModel from "../vendor/vendor.model";
+import VerifiedStatus from "../enums/enums.vendor";
 
 class AdminController implements Controller {
   public path = "/admin/process";
@@ -24,10 +24,10 @@ class AdminController implements Controller {
     const vendorId = request.params.id;
     if (!vendorId) throw new VendorNotFoundException(vendorId);
     try {
-      const confirmedVendor = await this.vendor.findOneAndUpdate(
-        { vendorId },
+      const confirmedVendor = await this.vendor.findByIdAndUpdate(
+        vendorId,
         {
-          isConfirmedVendor: StatusOfVendorEnum.CONFIRMED,
+          isConfirmedVendor: VerifiedStatus.CONFIRMED,
         },
         { new: true }
       );

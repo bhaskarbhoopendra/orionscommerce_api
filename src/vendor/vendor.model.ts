@@ -11,11 +11,10 @@ const vendorSchema = new mongoose.Schema({
   company: String,
   isVendor: Boolean,
   isConfirmedVendor: { enum: ["confirmed", "pending"] }, //confirmed from admin
-  password: String,
-});
-
-vendorSchema.virtual("fullName").get(function () {
-  return `${this.firstName} ${this.lastName}`;
+  password: {
+    type: String,
+    get: (): undefined => undefined,
+  },
 });
 
 const VendorModel = mongoose.model<Ivendor & mongoose.Document>(

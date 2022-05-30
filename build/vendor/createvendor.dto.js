@@ -11,7 +11,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
 const user_dto_1 = __importDefault(require("../user/user.dto"));
-const enums_vendor_1 = __importDefault(require("./enums.vendor"));
+const enums_vendor_1 = __importDefault(require("../enums/enums.vendor"));
 class CreatevendorDto extends user_dto_1.default {
 }
 __decorate([
@@ -26,4 +26,8 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsBoolean)()
 ], CreatevendorDto.prototype, "isVendor", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)()
+], CreatevendorDto.prototype, "warehouse", void 0);
 exports.default = CreatevendorDto;
