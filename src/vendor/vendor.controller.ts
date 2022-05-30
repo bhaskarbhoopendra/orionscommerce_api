@@ -20,7 +20,7 @@ class VendorController implements Controller {
       this.vendorCreateWarehouse
     );
 
-    this.router.get(`${this.path}/get/:id`, this.getSingleVendor);
+    this.router.get(`${this.path}/getwarehouse/:id`, this.getSingleWarehouse);
   }
 
   private vendorCreateWarehouse = async (
@@ -34,10 +34,11 @@ class VendorController implements Controller {
       vendor: vendorId,
     });
     await newWarehouse.save();
+    console.log({ newWarehouse });
     response.send(newWarehouse);
   };
 
-  public getSingleVendor = async (request: Request, response: Response) => {
+  public getSingleWarehouse = async (request: Request, response: Response) => {
     const warehouseId = request.params.id;
     const foundWarehouse = await this.warehouse
       .findById(warehouseId)

@@ -18,9 +18,10 @@ class VendorController {
             const warehouseData = request.body;
             const newWarehouse = new this.warehouse(Object.assign(Object.assign({}, warehouseData), { vendor: vendorId }));
             await newWarehouse.save();
+            console.log({ newWarehouse });
             response.send(newWarehouse);
         };
-        this.getSingleVendor = async (request, response) => {
+        this.getSingleWarehouse = async (request, response) => {
             const warehouseId = request.params.id;
             const foundWarehouse = await this.warehouse
                 .findById(warehouseId)
@@ -33,7 +34,7 @@ class VendorController {
     }
     initializeRoutes() {
         this.router.post(`${this.path}/warehouse/create/:id`, confirmedVendor_middleware_1.default, this.vendorCreateWarehouse);
-        this.router.get(`${this.path}/get/:id`, this.getSingleVendor);
+        this.router.get(`${this.path}/getwarehouse/:id`, this.getSingleWarehouse);
     }
 }
 exports.default = VendorController;

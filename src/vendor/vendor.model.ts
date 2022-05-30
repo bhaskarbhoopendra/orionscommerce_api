@@ -15,6 +15,12 @@ const vendorSchema = new mongoose.Schema({
     type: String,
     get: (): undefined => undefined,
   },
+  warehouse: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Warehouse",
+    },
+  ],
 });
 
 const VendorModel = mongoose.model<Ivendor & mongoose.Document>(
