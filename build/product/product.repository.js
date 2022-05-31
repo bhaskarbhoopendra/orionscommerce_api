@@ -14,7 +14,7 @@ class ProductRepository {
             return await this.product.findById(id);
         };
         this.productByIdAndUpdate = async (id, data) => {
-            return await this.product.findByIdAndUpdate(id, data);
+            return await this.product.findByIdAndUpdate(id, data, { new: true });
         };
         this.productByIdAndDelete = async (id) => {
             return await this.product.deleteOne({ id: id });

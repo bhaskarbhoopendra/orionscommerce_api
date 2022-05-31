@@ -2,19 +2,26 @@ import { Router, Request, Response, NextFunction } from "express";
 import VendorNotFoundException from "../excpetions/VendorNotFoundException";
 import Controller from "../interfaces/controller.interface";
 import adminMiddleware from "../middleware/admin.middleware";
-import VendorModel from "../vendor/vendor.model";
 import VerifiedStatus from "../enums/enums.vendor";
 import Warehouse from "../warehouse/warehouse.model";
 import WarehouseNotFoundException from "../excpetions/WarehouseNotFoundException";
+import VendorRepository from "../vendor/vendor.repository";
+import WarehouseRepository from "../warehouse/warehouse.repository";
+import VendorModel from "../vendor/vendor.model";
+import AdminService from "./admin.service";
 
 class AdminController implements Controller {
   public path = "/admin/process";
   public router = Router();
+  vendorRepository = new VendorRepository();
+  warehouseRepository = new WarehouseRepository();
   vendor = VendorModel;
-  warehouse = Warehouse;
+  AdminService = new AdminService();
+
   constructor() {
     this.initializeRoutes();
   }
+
   private initializeRoutes() {
     this.router.get(
       `${this.path}/verify/vendor/:id`,
@@ -30,7 +37,7 @@ class AdminController implements Controller {
 
     this.router.get(
       `${this.path}/getonevendor/:id`,
-
+      adminMiddleware,
       this.getOneVendor
     );
   }
@@ -39,16 +46,15 @@ class AdminController implements Controller {
     const vendorId = request.params.id;
     if (!vendorId) throw new VendorNotFoundException(vendorId);
     try {
-      const confirmedVendor = await this.vendor.findByIdAndUpdate(
+      const confirmedVendor = await this.vendorRepository.vendorByIdAndUpdate(
         vendorId,
         {
           isConfirmedVendor: VerifiedStatus.CONFIRMED,
-        },
-        { new: true }
+        }
       );
-      response.send(confirmedVendor);
+      response.send({ data: confirmedVendor });
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -58,41 +64,24 @@ class AdminController implements Controller {
   ) => {
     const { vendorId, warehouseId } = request.params;
     try {
-      const foundVendor = await this.vendor.findById(vendorId);
-      if (!foundVendor) throw new VendorNotFoundException(vendorId);
-      const foundWarehouse = await this.warehouse.findById(warehouseId);
-      if (!foundWarehouse) throw new WarehouseNotFoundException(warehouseId);
-
-      if (
-        foundVendor.isConfirmedVendor == VerifiedStatus.CONFIRMED &&
-        foundVendor.id == foundWarehouse.vendor
-      ) {
-        const confirmedWarehouse = await this.warehouse.findByIdAndUpdate(
-          warehouseId,
-          {
-            isVerifiedWarehouse: VerifiedStatus.CONFIRMED,
-          },
-          { new: true }
-        );
-
-        foundVendor.warehouse.push(warehouseId);
-        foundVendor.save();
-        response.send({ foundVendor, confirmedWarehouse });
-      }
-      console.log("Something went wrong");
+      const { confirmedWarehouse, foundVendor } =
+        await this.AdminService.adminVerifyVendor(vendorId, warehouseId);
+      response.send({ foundVendor, confirmedWarehouse });
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
   private getOneVendor = async (request: Request, response: Response) => {
     const vendorId = request.params.id;
     try {
-      const foundVendor = await this.vendor.findById(vendorId);
+      const foundVendor = await this.vendor
+        .findById(vendorId)
+        .populate("warehouse");
       if (!foundVendor) throw new VendorNotFoundException(vendorId);
       response.send(foundVendor);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 }

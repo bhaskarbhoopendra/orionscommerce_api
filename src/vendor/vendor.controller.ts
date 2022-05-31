@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import WarehouseNotFoundException from "../excpetions/WarehouseNotFoundException";
 import Controller from "../interfaces/controller.interface";
 import confirmVendorMiddleware from "../middleware/confirmedVendor.middleware";
 import Warehouse from "../warehouse/warehouse.model";
@@ -7,8 +8,9 @@ import VendorModel from "./vendor.model";
 class VendorController implements Controller {
   public path = "/vendor";
   public router = Router();
-  public warehouse = Warehouse;
-  vendor = VendorModel;
+  public warehouse = Warehouse; //warehouse model
+  public vendor = VendorModel;
+
   constructor() {
     this.initializeRoutes();
   }
@@ -20,7 +22,11 @@ class VendorController implements Controller {
       this.vendorCreateWarehouse
     );
 
-    this.router.get(`${this.path}/getwarehouse/:id`, this.getSingleWarehouse);
+    this.router.get(
+      `${this.path}/getwarehouse/:id`,
+      confirmVendorMiddleware,
+      this.getSingleWarehouse
+    );
   }
 
   private vendorCreateWarehouse = async (
@@ -29,22 +35,29 @@ class VendorController implements Controller {
   ) => {
     const vendorId = request.params.id;
     const warehouseData = request.body;
-    const newWarehouse = new this.warehouse({
-      ...warehouseData,
-      vendor: vendorId,
-    });
-    await newWarehouse.save();
-    console.log({ newWarehouse });
-    response.send(newWarehouse);
+    try {
+      const newWarehouse = new this.warehouse({
+        ...warehouseData,
+        vendor: vendorId,
+      });
+      await newWarehouse.save();
+      response.send({ data: newWarehouse });
+    } catch (error) {
+      return error;
+    }
   };
 
-  public getSingleWarehouse = async (request: Request, response: Response) => {
+  private getSingleWarehouse = async (request: Request, response: Response) => {
     const warehouseId = request.params.id;
-    const foundWarehouse = await this.warehouse
-      .findById(warehouseId)
-      .populate("vendor", "-password");
-    if (!foundWarehouse) console.log("No warehouse found");
-    response.send(foundWarehouse);
+    try {
+      const foundWarehouse = await this.warehouse
+        .findById(warehouseId)
+        .populate("vendor", "-password");
+      if (!foundWarehouse) throw new WarehouseNotFoundException(warehouseId);
+      response.send({ data: foundWarehouse });
+    } catch (error) {
+      return error;
+    }
   };
 }
 export default VendorController;

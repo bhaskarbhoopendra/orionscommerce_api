@@ -5,6 +5,7 @@ interface Iwarehouse {
   isVerifiedWarehouse: string;
   warehouseName: string;
   execPopulate(): any;
+  populate(): any;
 }
 
 export default Iwarehouse;

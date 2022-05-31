@@ -21,7 +21,7 @@ class ProductRepository {
   };
 
   public productByIdAndUpdate = async (id: string, data: any) => {
-    return await this.product.findByIdAndUpdate(id, data);
+    return await this.product.findByIdAndUpdate(id, data, { new: true });
   };
 
   public productByIdAndDelete = async (id: string | ParamsDictionary) => {
