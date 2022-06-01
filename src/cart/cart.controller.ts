@@ -8,6 +8,7 @@ import ProdutNotFoundException from "../excpetions/ProductNotFoundException";
 
 import CartNotFoundException from "../excpetions/CartNotFoundException";
 import ProductRepository from "../product/product.repository";
+import authMiddleware from "../middleware/auth.middleware";
 
 class CartController implements Controller {
   public path = "/cart";
@@ -22,11 +23,16 @@ class CartController implements Controller {
   }
 
   public initializeCartRoutes() {
-    this.router.post(`${this.path}/addin`, this.addTocart);
-    this.router.get(`${this.path}/get`, this.getCart);
+    this.router.post(
+      `${this.path}/addtocart/:id`,
+      authMiddleware,
+      this.addTocart
+    );
+    this.router.get(`${this.path}/get`, authMiddleware, this.getCart);
   }
 
   public addTocart = async (request: Request, response: Response) => {
+    const userId: string = request.params.id;
     const productId: string = request.body.productId;
     const quantity: number = Number(request.body.quantity);
     try {
@@ -38,7 +44,8 @@ class CartController implements Controller {
         cart,
         productDetails,
         productId,
-        quantity
+        quantity,
+        userId
       );
       response.send(newCartData);
     } catch (err) {

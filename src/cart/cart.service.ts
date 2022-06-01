@@ -18,7 +18,8 @@ class CartService {
     cart: ICart,
     productDetails: any,
     productId: string,
-    quantity: number
+    quantity: number,
+    userId: string
   ) => {
     if (cart) {
       const productIdExistInCart = (item: any): void => {
@@ -37,6 +38,7 @@ class CartService {
         cart.items[productFoundIndex].total =
           cart.items[productFoundIndex].quantity * productDetails.price;
         cart.items[productFoundIndex].price = productDetails.price;
+        cart.user = userId;
       } else if (quantity > 0) {
         cart.items.push({
           productId: productId,
@@ -47,6 +49,7 @@ class CartService {
         cart.subTotal = cart.items
           .map((item: IItem): number => item.total)
           .reduce((acc: number, next: number) => acc + next);
+        cart.user = userId;
       } else {
         return "Invalid Request";
       }
@@ -64,10 +67,10 @@ class CartService {
           },
         ],
         subTotal: productDetails.price * quantity,
+        user: userId,
       };
       // console.log(updatedCart);
       const newCartData = new this.cart({ ...updatedCart });
-      console.log(newCartData);
       return newCartData;
     }
   };

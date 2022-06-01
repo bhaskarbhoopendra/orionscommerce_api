@@ -38,7 +38,7 @@ class AdminController {
         this.verifyVendorWarehouse = async (request, response) => {
             const { vendorId, warehouseId } = request.params;
             try {
-                const { confirmedWarehouse, foundVendor } = await this.AdminService.adminVerifyVendor(vendorId, warehouseId);
+                const { confirmedWarehouse, foundVendor } = await this.AdminService.adminVerifyWarehouseWithVendor(vendorId, warehouseId);
                 response.send({ foundVendor, confirmedWarehouse });
             }
             catch (error) {

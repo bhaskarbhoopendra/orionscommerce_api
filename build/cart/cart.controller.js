@@ -10,6 +10,7 @@ const cart_service_1 = __importDefault(require("./cart.service"));
 const ProductNotFoundException_1 = __importDefault(require("../excpetions/ProductNotFoundException"));
 const CartNotFoundException_1 = __importDefault(require("../excpetions/CartNotFoundException"));
 const product_repository_1 = __importDefault(require("../product/product.repository"));
+const auth_middleware_1 = __importDefault(require("../middleware/auth.middleware"));
 class CartController {
     constructor() {
         this.path = "/cart";
@@ -19,6 +20,7 @@ class CartController {
         this.productRepository = new product_repository_1.default();
         this.cartService = new cart_service_1.default();
         this.addTocart = async (request, response) => {
+            const userId = request.params.id;
             const productId = request.body.productId;
             const quantity = Number(request.body.quantity);
             try {
@@ -26,7 +28,7 @@ class CartController {
                 let productDetails = await this.productRepository.productByID(productId);
                 if (!productDetails)
                     throw new ProductNotFoundException_1.default(productId);
-                const newCartData = await this.cartService.addTocart(cart, productDetails, productId, quantity);
+                const newCartData = await this.cartService.addTocart(cart, productDetails, productId, quantity, userId);
                 response.send(newCartData);
             }
             catch (err) {
@@ -52,8 +54,8 @@ class CartController {
         this.initializeCartRoutes();
     }
     initializeCartRoutes() {
-        this.router.post(`${this.path}/addin`, this.addTocart);
-        this.router.get(`${this.path}/get`, this.getCart);
+        this.router.post(`${this.path}/addtocart/:id`, auth_middleware_1.default, this.addTocart);
+        this.router.get(`${this.path}/get`, auth_middleware_1.default, this.getCart);
     }
 }
 exports.default = CartController;

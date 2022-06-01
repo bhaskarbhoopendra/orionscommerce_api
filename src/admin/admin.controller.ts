@@ -69,7 +69,10 @@ class AdminController implements Controller {
     const { vendorId, warehouseId } = request.params;
     try {
       const { confirmedWarehouse, foundVendor } =
-        await this.AdminService.adminVerifyVendor(vendorId, warehouseId);
+        await this.AdminService.adminVerifyWarehouseWithVendor(
+          vendorId,
+          warehouseId
+        );
       response.send({ foundVendor, confirmedWarehouse });
     } catch (error) {
       return error;

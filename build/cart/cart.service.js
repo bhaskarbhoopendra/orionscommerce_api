@@ -14,7 +14,7 @@ class CartService {
             });
             return carts[0];
         };
-        this.addTocart = async (cart, productDetails, productId, quantity) => {
+        this.addTocart = async (cart, productDetails, productId, quantity, userId) => {
             if (cart) {
                 const productIdExistInCart = (item) => {
                     item.productId._id == productId;
@@ -29,6 +29,7 @@ class CartService {
                     cart.items[productFoundIndex].total =
                         cart.items[productFoundIndex].quantity * productDetails.price;
                     cart.items[productFoundIndex].price = productDetails.price;
+                    cart.user = userId;
                 }
                 else if (quantity > 0) {
                     cart.items.push({
@@ -40,6 +41,7 @@ class CartService {
                     cart.subTotal = cart.items
                         .map((item) => item.total)
                         .reduce((acc, next) => acc + next);
+                    cart.user = userId;
                 }
                 else {
                     return "Invalid Request";
@@ -59,10 +61,10 @@ class CartService {
                         },
                     ],
                     subTotal: productDetails.price * quantity,
+                    user: userId,
                 };
                 // console.log(updatedCart);
                 const newCartData = new this.cart(Object.assign({}, updatedCart));
-                console.log(newCartData);
                 return newCartData;
             }
         };

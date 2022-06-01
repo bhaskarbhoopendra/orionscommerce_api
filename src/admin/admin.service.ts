@@ -9,7 +9,10 @@ class AdminService {
   vendorRepository = new VendorRepository();
   constructor() {}
 
-  public adminVerifyVendor = async (vendorId: string, warehouseId: string) => {
+  public adminVerifyWarehouseWithVendor = async (
+    vendorId: string,
+    warehouseId: string
+  ) => {
     const foundVendor = await this.vendorRepository.vendorById(vendorId);
     if (!foundVendor) throw new VendorNotFoundException(vendorId);
     const foundWarehouse = await this.warehouseRepository.warehouseByID(

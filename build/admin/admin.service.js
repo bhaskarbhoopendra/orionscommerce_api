@@ -12,7 +12,7 @@ class AdminService {
     constructor() {
         this.warehouseRepository = new warehouse_repository_1.default();
         this.vendorRepository = new vendor_repository_1.default();
-        this.adminVerifyVendor = async (vendorId, warehouseId) => {
+        this.adminVerifyWarehouseWithVendor = async (vendorId, warehouseId) => {
             var _a;
             const foundVendor = await this.vendorRepository.vendorById(vendorId);
             if (!foundVendor)
