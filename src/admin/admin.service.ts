@@ -25,6 +25,7 @@ class AdminService {
         await this.warehouseRepository.warehouseByIDAndUpdate(warehouseId, {
           isVerifiedWarehouse: VerifiedStatus.CONFIRMED,
         });
+
       //TODO check for existing warehouse
       foundVendor?.warehouse?.push(warehouseId);
       await foundVendor.save();

@@ -33,6 +33,12 @@ exports.addressSchema = new mongoose.Schema({
     phoneNumber: Number,
 });
 const userSchema = new mongoose.Schema({
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order",
+        },
+    ],
     address: [
         {
             type: mongoose.Schema.Types.ObjectId,
