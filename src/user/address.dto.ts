@@ -1,4 +1,5 @@
 import { IsEnum, IsNumber, IsString } from "class-validator";
+import AddressTypeEnum from "../enums/enums.address";
 
 class CreateAddressDto {
   @IsString()
@@ -15,6 +16,9 @@ class CreateAddressDto {
 
   @IsNumber()
   phoneNumber: Number;
+
+  @IsEnum(AddressTypeEnum)
+  addressType: AddressTypeEnum;
 }
 
 export default CreateAddressDto;

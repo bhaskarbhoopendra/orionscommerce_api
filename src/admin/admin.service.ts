@@ -2,7 +2,6 @@ import VerifiedStatus from "../enums/enums.vendor";
 import VendorNotFoundException from "../excpetions/VendorNotFoundException";
 import WarehouseNotFoundException from "../excpetions/WarehouseNotFoundException";
 import VendorRepository from "../vendor/vendor.repository";
-import Iwarehouse from "../warehouse/warehouse.interface";
 import WarehouseRepository from "../warehouse/warehouse.repository";
 
 class AdminService {

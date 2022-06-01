@@ -4,9 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const user_model_1 = require("../user/user.model");
+const addressSchema = new mongoose_1.default.Schema({
+    addressType: { enum: ["billing", "shipping"] },
+    city: String,
+    country: String,
+    street: String,
+    pincode: Number,
+    phoneNumber: Number,
+});
 const vendorSchema = new mongoose_1.default.Schema({
-    address: user_model_1.addressSchema,
+    address: addressSchema,
     firstName: String,
     lastName: String,
     email: String,

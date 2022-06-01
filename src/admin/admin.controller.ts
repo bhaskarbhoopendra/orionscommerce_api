@@ -9,6 +9,7 @@ import VendorRepository from "../vendor/vendor.repository";
 import WarehouseRepository from "../warehouse/warehouse.repository";
 import VendorModel from "../vendor/vendor.model";
 import AdminService from "./admin.service";
+import userModel from "../user/user.model";
 
 class AdminController implements Controller {
   public path = "/admin/process";
@@ -16,6 +17,7 @@ class AdminController implements Controller {
   vendorRepository = new VendorRepository();
   warehouseRepository = new WarehouseRepository();
   vendor = VendorModel;
+  user = userModel;
   AdminService = new AdminService();
 
   constructor() {
@@ -40,6 +42,8 @@ class AdminController implements Controller {
       adminMiddleware,
       this.getOneVendor
     );
+
+    this.router.get(`${this.path}/user/:id`, adminMiddleware, this.getOneUser);
   }
 
   private verifyVendor = async (request: Request, response: Response) => {
@@ -80,6 +84,17 @@ class AdminController implements Controller {
         .populate("warehouse");
       if (!foundVendor) throw new VendorNotFoundException(vendorId);
       response.send(foundVendor);
+    } catch (error) {
+      return error;
+    }
+  };
+
+  private getOneUser = async (request: Request, response: Response) => {
+    const userId = request.params.id;
+    if (!userId) throw new VendorNotFoundException(userId);
+    try {
+      const user = await this.user.findById(userId);
+      response.send(user);
     } catch (error) {
       return error;
     }

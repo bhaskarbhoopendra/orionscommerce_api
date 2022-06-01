@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
-import { addressSchema } from "../user/user.model";
 import Ivendor from "./vendor.interface";
+
+const addressSchema = new mongoose.Schema({
+  addressType: { enum: ["billing", "shipping"] },
+  city: String,
+  country: String,
+  street: String,
+  pincode: Number,
+  phoneNumber: Number,
+});
 
 const vendorSchema = new mongoose.Schema({
   address: addressSchema,
