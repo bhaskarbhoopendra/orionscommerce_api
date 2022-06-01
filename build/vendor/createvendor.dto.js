@@ -10,25 +10,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
-const enums_address_1 = __importDefault(require("../enums/enums.address"));
-class CreateAddressDto {
+const user_dto_1 = __importDefault(require("../user/user.dto"));
+const enums_vendor_1 = __importDefault(require("../enums/enums.vendor"));
+class CreatevendorDto extends user_dto_1.default {
 }
 __decorate([
     (0, class_validator_1.IsString)()
-], CreateAddressDto.prototype, "street", void 0);
+], CreatevendorDto.prototype, "organization", void 0);
 __decorate([
     (0, class_validator_1.IsString)()
-], CreateAddressDto.prototype, "city", void 0);
+], CreatevendorDto.prototype, "company", void 0);
 __decorate([
-    (0, class_validator_1.IsString)()
-], CreateAddressDto.prototype, "country", void 0);
+    (0, class_validator_1.IsEnum)(enums_vendor_1.default)
+], CreatevendorDto.prototype, "isConfirmedvendor", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)()
-], CreateAddressDto.prototype, "pincode", void 0);
+    (0, class_validator_1.IsBoolean)()
+], CreatevendorDto.prototype, "isVendor", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)()
-], CreateAddressDto.prototype, "phoneNumber", void 0);
-__decorate([
-    (0, class_validator_1.IsEnum)(enums_address_1.default)
-], CreateAddressDto.prototype, "addressType", void 0);
-exports.default = CreateAddressDto;
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)()
+], CreatevendorDto.prototype, "warehouse", void 0);
+exports.default = CreatevendorDto;

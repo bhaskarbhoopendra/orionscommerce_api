@@ -11,7 +11,18 @@ export const addressSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema(
   {
-    address: addressSchema,
+    orders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order",
+      },
+    ],
+    address: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UserAddress",
+      },
+    ],
     email: String,
     firstName: String,
     lastName: String,

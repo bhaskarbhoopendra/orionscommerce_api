@@ -27,31 +27,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const vendor_authentication_service_1 = __importDefault(require("./vendor.authentication.service"));
 const bcrypt = __importStar(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
-const admin_model_1 = __importDefault(require("../admin.model"));
-const admin_authenticate_service_1 = __importDefault(require("./admin.authenticate.service"));
-const wrongCredentialsException_1 = __importDefault(require("../../excpetions/wrongCredentialsException"));
-class AdminAuthenticationController {
+const vendor_model_1 = __importDefault(require("./vendor.model"));
+const wrongCredentialsException_1 = __importDefault(require("../excpetions/wrongCredentialsException"));
+class VendorAuthenticationController {
     constructor() {
-        this.path = "/admin";
+        this.path = "/vendor";
         this.router = (0, express_1.Router)();
-        this.admin = admin_model_1.default;
-        this.adminAuthenticateService = new admin_authenticate_service_1.default();
-        this.adminRegister = async (request, response, next) => {
-            const adminData = request.body;
+        this.vendor = vendor_model_1.default;
+        this.vendorAuthenticationService = new vendor_authentication_service_1.default();
+        this.vendorRegister = async (request, response, next) => {
+            const vendorData = request.body;
             try {
-                const { cookie, admin } = await this.adminAuthenticateService.register(adminData);
+                const { cookie, vendor } = await this.vendorAuthenticationService.register(vendorData);
                 response.setHeader("Set-Cookie", [cookie]);
-                response.send(admin);
+                response.send(vendor);
             }
             catch (error) {
                 next(error);
             }
         };
-        this.adminLogin = async (request, response, next) => {
+        this.vendorLogin = async (request, response, next) => {
             const logInData = request.body;
-            const vendor = await this.admin.findOne({ email: logInData.email });
+            const vendor = await this.vendor.findOne({ email: logInData.email });
             if (vendor) {
                 const isPasswordMatching = await bcrypt.compare(logInData.password, vendor.get("password", null, { getters: false }));
                 if (isPasswordMatching) {
@@ -70,17 +70,17 @@ class AdminAuthenticationController {
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.post(`${this.path}/register`, this.adminRegister);
-        this.router.post(`${this.path}/login`, this.adminLogin);
+        this.router.post(`${this.path}/register`, this.vendorRegister);
+        this.router.post(`${this.path}/login`, this.vendorLogin);
     }
     createCookie(tokenData) {
         return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
     }
-    createToken(admin) {
+    createToken(vendor) {
         const expiresIn = 60 * 60; // an hour
         const { JWT_SECRET } = process.env;
         const dataStoredInToken = {
-            _id: admin._id,
+            _id: vendor._id,
         };
         return {
             expiresIn,
@@ -88,4 +88,4 @@ class AdminAuthenticationController {
         };
     }
 }
-exports.default = AdminAuthenticationController;
+exports.default = VendorAuthenticationController;

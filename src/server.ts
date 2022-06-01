@@ -5,9 +5,11 @@ import AdminAuthenticationController from "./admin/adminAuthentication/adminAuth
 import App from "./app";
 import AuthenticationController from "./authentication/authentication.controller";
 import CartController from "./cart/cart.controller";
+import OrderController from "./order/order.controller";
 import ProductController from "./product/product.controller";
 import UserController from "./user/user.controller";
-import VendorAuthenticationController from "./vendorAuthentication/vendor.authentication.controller";
+import VendorAuthenticationController from "./vendor/vendor.authentication.controller";
+import VendorController from "./vendor/vendor.controller";
 
 const app = new App([
   new UserController(),
@@ -17,6 +19,8 @@ const app = new App([
   new VendorAuthenticationController(),
   new AdminAuthenticationController(),
   new AdminController(),
+  new VendorController(),
+  new OrderController(),
 ]);
 
 app.listen();
