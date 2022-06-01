@@ -43,7 +43,7 @@ class AdminController implements Controller {
       this.getOneVendor
     );
 
-    this.router.get(`${this.path}/user/:id`, adminMiddleware, this.getOneUser);
+    this.router.get(`${this.path}/user/:id`, this.getOneUser);
   }
 
   private verifyVendor = async (request: Request, response: Response) => {

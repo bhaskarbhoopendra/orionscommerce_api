@@ -27,7 +27,7 @@ class AdminService {
         });
       //TODO check for existing warehouse
       foundVendor?.warehouse?.push(warehouseId);
-      foundVendor.save();
+      await foundVendor.save();
       return { foundVendor, confirmedWarehouse };
     }
   };

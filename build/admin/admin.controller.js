@@ -77,7 +77,7 @@ class AdminController {
         this.router.get(`${this.path}/verify/vendor/:id`, admin_middleware_1.default, this.verifyVendor);
         this.router.get(`${this.path}/verify/warehouse/:vendorId/:warehouseId`, admin_middleware_1.default, this.verifyVendorWarehouse);
         this.router.get(`${this.path}/getonevendor/:id`, admin_middleware_1.default, this.getOneVendor);
-        this.router.get(`${this.path}/user/:id`, admin_middleware_1.default, this.getOneUser);
+        this.router.get(`${this.path}/user/:id`, this.getOneUser);
     }
 }
 exports.default = AdminController;
