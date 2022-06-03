@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import Controller from "../interfaces/controller.interface";
-import adminMiddleware from "../middleware/admin.middleware";
+import Controller from "../../interfaces/controller.interface";
+import adminMiddleware from "../../middleware/admin.middleware";
 import ZoneDTO from "./zone.dto";
 import IZone from "./zone.interface";
 import zoneModel from "./zone.model";

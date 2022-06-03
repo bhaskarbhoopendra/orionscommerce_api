@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
-import Controller from "../interfaces/controller.interface";
-import adminMiddleware from "../middleware/admin.middleware";
+import Controller from "../../interfaces/controller.interface";
+import adminMiddleware from "../../middleware/admin.middleware";
 import pincodetypeModel from "./pincode.model";
 import PincodeRepository from "./pincode.repository";
 
