@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import Controller from "../interfaces/controller.interface";
+import authMiddleware from "../middleware/auth.middleware";
 import CreateAddressDto from "./address.dto";
 import userAddressModel from "./address.user.model";
 import userModel from "./user.model";
@@ -14,7 +15,16 @@ class UserController implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}/add/address/:id`, this.userAddAddress);
+    this.router.post(
+      `${this.path}/add/address/:id`,
+      authMiddleware,
+      this.userAddAddress
+    );
+    this.router.post(
+      `${this.path}/checkout/:userId/:productId`,
+      authMiddleware,
+      this.userCheckoutWithBuyNow
+    );
   }
 
   private userAddAddress = async (request: Request, response: Response) => {
@@ -35,6 +45,11 @@ class UserController implements Controller {
       return error;
     }
   };
+
+  private userCheckoutWithBuyNow = async (
+    request: Request,
+    response: Response
+  ) => {};
 }
 
 export default UserController;

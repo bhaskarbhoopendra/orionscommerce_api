@@ -26,6 +26,7 @@ class VendorController {
                 return error;
             }
         };
+        // TODO move to WarehouseController
         this.getSingleWarehouse = async (request, response) => {
             const warehouseId = request.params.id;
             try {
@@ -40,11 +41,15 @@ class VendorController {
                 return error;
             }
         };
+        // vendor request admin to sell the product at warehouse
+        // getting productId, vendor warehouse and getting then verified
+        this.vendorProductRequest = async (request, response) => { };
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.post(`${this.path}/warehouse/create/:id`, confirmedVendor_middleware_1.default, this.vendorCreateWarehouse);
         this.router.get(`${this.path}/getwarehouse/:id`, confirmedVendor_middleware_1.default, this.getSingleWarehouse);
+        this.router.get(`${this.path}/product/verify/:productId/:warehouseId`, confirmedVendor_middleware_1.default, this.vendorProductRequest);
     }
 }
 exports.default = VendorController;

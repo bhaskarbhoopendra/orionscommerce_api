@@ -27,6 +27,11 @@ class VendorController implements Controller {
       confirmVendorMiddleware,
       this.getSingleWarehouse
     );
+    this.router.get(
+      `${this.path}/product/verify/:productId/:warehouseId`,
+      confirmVendorMiddleware,
+      this.vendorProductRequest
+    );
   }
 
   private vendorCreateWarehouse = async (
@@ -47,6 +52,7 @@ class VendorController implements Controller {
     }
   };
 
+  // TODO move to WarehouseController
   private getSingleWarehouse = async (request: Request, response: Response) => {
     const warehouseId = request.params.id;
     try {
@@ -59,5 +65,12 @@ class VendorController implements Controller {
       return error;
     }
   };
+
+  // vendor request admin to sell the product at warehouse
+  // getting productId, vendor warehouse and getting then verified
+  private vendorProductRequest = async (
+    request: Request,
+    response: Response
+  ) => {};
 }
 export default VendorController;

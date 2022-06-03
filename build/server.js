@@ -14,6 +14,7 @@ const product_controller_1 = __importDefault(require("./product/product.controll
 const user_controller_1 = __importDefault(require("./user/user.controller"));
 const vendor_authentication_controller_1 = __importDefault(require("./vendor/vendor.authentication.controller"));
 const vendor_controller_1 = __importDefault(require("./vendor/vendor.controller"));
+const zone_controller_1 = __importDefault(require("./zone/zone.controller"));
 const app = new app_1.default([
     new user_controller_1.default(),
     new authentication_controller_1.default(),
@@ -24,5 +25,6 @@ const app = new app_1.default([
     new admin_controller_1.default(),
     new vendor_controller_1.default(),
     new order_controller_1.default(),
+    new zone_controller_1.default(),
 ]);
 app.listen();

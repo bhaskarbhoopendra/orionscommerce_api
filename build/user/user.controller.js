@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const auth_middleware_1 = __importDefault(require("../middleware/auth.middleware"));
 const address_user_model_1 = __importDefault(require("./address.user.model"));
 const user_model_1 = __importDefault(require("./user.model"));
 class UserController {
@@ -28,10 +29,12 @@ class UserController {
                 return error;
             }
         };
+        this.userCheckoutWithBuyNow = async (request, response) => { };
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.post(`${this.path}/add/address/:id`, this.userAddAddress);
+        this.router.post(`${this.path}/add/address/:id`, auth_middleware_1.default, this.userAddAddress);
+        this.router.post(`${this.path}/checkout/:userId/:productId`, auth_middleware_1.default, this.userCheckoutWithBuyNow);
     }
 }
 exports.default = UserController;
