@@ -10,6 +10,7 @@ const app_1 = __importDefault(require("./app"));
 const authentication_controller_1 = __importDefault(require("./authentication/authentication.controller"));
 const cart_controller_1 = __importDefault(require("./cart/cart.controller"));
 const order_controller_1 = __importDefault(require("./order/order.controller"));
+const pincodetype_controller_1 = __importDefault(require("./pincodetype/pincodetype.controller"));
 const product_controller_1 = __importDefault(require("./product/product.controller"));
 const user_controller_1 = __importDefault(require("./user/user.controller"));
 const vendor_authentication_controller_1 = __importDefault(require("./vendor/vendor.authentication.controller"));
@@ -26,5 +27,6 @@ const app = new app_1.default([
     new vendor_controller_1.default(),
     new order_controller_1.default(),
     new zone_controller_1.default(),
+    new pincodetype_controller_1.default(),
 ]);
 app.listen();

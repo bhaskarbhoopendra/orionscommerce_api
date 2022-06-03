@@ -56,8 +56,7 @@ class ZoneController implements Controller {
 
   private getAllZone = async (request: Request, response: Response) => {
     try {
-      //   const zone = await this.zoneRepository.getAllZone();
-      const zone = await this.zoneModel.find();
+      const zone = await this.zoneRepository.getAllZone();
       response.send(zone);
     } catch (error) {
       return error;

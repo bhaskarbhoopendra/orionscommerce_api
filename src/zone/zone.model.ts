@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import IZone from "./zone.interface";
 
 const zoneShema = new mongoose.Schema({
-  zoneName: String,
+  zoneName: { type: String, unique: true },
   minimumDistance: Number,
   maximumDistance: Number,
 });
