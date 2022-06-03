@@ -1,7 +1,7 @@
 import { ParamsDictionary } from "express-serve-static-core";
 import pincodetypeModel from "./pincode.model";
 
-class ZoneRepository {
+class PincodeRepository {
   public pincode = pincodetypeModel;
   public id: string;
   public data: any;
@@ -30,4 +30,4 @@ class ZoneRepository {
   };
 }
 
-export default ZoneRepository;
+export default PincodeRepository;
