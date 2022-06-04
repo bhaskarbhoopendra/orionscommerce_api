@@ -56,7 +56,7 @@ class VendorAuthenticationController implements Controller {
       if (isPasswordMatching) {
         const tokenData = this.createToken(vendor);
         response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-        response.send({ tokenData, user: vendor });
+        response.send({ tokenData, vendor: vendor });
       } else {
         next(new WrongCredentialsException());
       }

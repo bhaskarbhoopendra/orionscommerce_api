@@ -57,7 +57,7 @@ class VendorAuthenticationController {
                 if (isPasswordMatching) {
                     const tokenData = this.createToken(vendor);
                     response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-                    response.send({ tokenData, user: vendor });
+                    response.send({ tokenData, vendor: vendor });
                 }
                 else {
                     next(new wrongCredentialsException_1.default());
