@@ -22,6 +22,9 @@ __decorate([
     (0, class_validator_1.IsString)()
 ], CreateUserDto.prototype, "password", void 0);
 __decorate([
+    (0, class_validator_1.IsString)()
+], CreateUserDto.prototype, "phoneNumber", void 0);
+__decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.ValidateNested)()
 ], CreateUserDto.prototype, "address", void 0);

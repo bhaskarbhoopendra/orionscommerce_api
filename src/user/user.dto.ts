@@ -20,6 +20,9 @@ class CreateUserDto {
   @IsString()
   public password: string;
 
+  @IsString()
+  public phoneNumber: number;
+
   @IsOptional()
   @ValidateNested()
   public address?: CreateAddressDto;

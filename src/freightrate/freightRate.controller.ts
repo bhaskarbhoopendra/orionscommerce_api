@@ -1,17 +1,11 @@
 import { Request, Router, Response } from "express";
 import idNotFroundException from "../excpetions/idNotFoundException";
 import Controller from "../interfaces/controller.interface";
-import FreightRateModel from "./freightRate.model";
 import FreightRateService from "./freightRate.service";
-import PincodeRepository from "./pincodetype/pincode.repository";
-import ZoneRepository from "./zone/zone.repository";
 
 class FreightRateController implements Controller {
   public path = "/freightrate";
   public router = Router();
-  freightRateChart = FreightRateModel;
-  public zoneRepository = new ZoneRepository();
-  public pincodeTypeRepository = new PincodeRepository();
   freightRateService = new FreightRateService();
   constructor() {
     this.initiializeRoutes();
@@ -21,6 +15,11 @@ class FreightRateController implements Controller {
     this.router.post(
       `${this.path}/create/rate/chart/:zoneId/:pincodeTypeId`,
       this.createRateChart
+    );
+
+    this.router.post(
+      `${this.path}/create/rate/chart/:zoneId/:pincodeTypeId/update/:freightRateId`,
+      this.updateFreightrRate
     );
   }
 
@@ -42,6 +41,14 @@ class FreightRateController implements Controller {
         rate
       );
       response.send({ data });
+    } catch (error) {
+      return error;
+    }
+  };
+
+  private updateFreightrRate = async (request: Request, response: Response) => {
+    try {
+      const data = await this.freightRateService.updateFregightRate();
     } catch (error) {
       return error;
     }

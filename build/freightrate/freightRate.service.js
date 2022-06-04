@@ -34,6 +34,10 @@ class FreightRateService {
             console.log(data);
             return data;
         };
+        this.updateFregightRate = () => {
+            const data = "Hello";
+            return data;
+        };
     }
 }
 exports.default = FreightRateService;

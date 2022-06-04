@@ -4,6 +4,7 @@ interface User {
   lastName?: string;
   email: string;
   password: string;
+  phoneNumber: number;
   address: object[];
   // address?: {
   //   addressType: string;

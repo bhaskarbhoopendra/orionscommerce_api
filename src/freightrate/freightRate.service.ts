@@ -40,6 +40,11 @@ class FreightRateService {
     console.log(data);
     return data;
   };
+
+  public updateFregightRate = () => {
+    const data = "Hello";
+    return data;
+  };
 }
 
 export default FreightRateService;

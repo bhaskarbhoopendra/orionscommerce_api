@@ -48,6 +48,7 @@ const userSchema = new mongoose.Schema({
     email: String,
     firstName: String,
     lastName: String,
+    phoneNumber: Number,
     password: {
         type: String,
         get: () => undefined,
