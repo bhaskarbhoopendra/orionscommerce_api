@@ -24,6 +24,7 @@ async function authMiddleware(
       const user = await userModel.findById(id);
       if (user) {
         request.user = user;
+
         next();
       } else {
         next(new WrongAuthenticationTokenException());
