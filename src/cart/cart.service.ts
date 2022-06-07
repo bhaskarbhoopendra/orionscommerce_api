@@ -4,7 +4,7 @@ import IItem from "./item.interface";
 
 class CartService {
   public cart = CartModel;
-  constructor() {}
+  constructor() { }
 
   public cartItem = async (): Promise<ICart> => {
     const carts = await this.cart.find().populate({
@@ -13,6 +13,8 @@ class CartService {
     });
     return carts[0];
   };
+
+
 
   public addTocart = async (
     cart: ICart,
