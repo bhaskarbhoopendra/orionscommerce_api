@@ -17,7 +17,7 @@ class ZoneController {
             const zoneData = request.body;
             try {
                 const createZone = new this.zoneModel(Object.assign({}, zoneData));
-                createZone.save();
+                await createZone.save();
                 response.send({ data: createZone });
             }
             catch (error) {

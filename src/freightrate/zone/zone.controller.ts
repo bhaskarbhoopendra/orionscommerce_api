@@ -35,7 +35,7 @@ class ZoneController implements Controller {
       const createZone = new this.zoneModel({
         ...zoneData,
       });
-      createZone.save();
+      await createZone.save();
       response.send({ data: createZone });
     } catch (error) {
       return error;
