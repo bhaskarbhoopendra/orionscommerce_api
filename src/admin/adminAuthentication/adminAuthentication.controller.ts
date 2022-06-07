@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Controller from "../../interfaces/controller.interface";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import AdminModel from "../admin.model";
 import CreateAdminDto from "./createAdmin.dto";

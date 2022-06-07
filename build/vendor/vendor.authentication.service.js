@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const userWithThatEmailAlreadyExistsException_1 = __importDefault(require("../excpetions/userWithThatEmailAlreadyExistsException"));
 const vendor_model_1 = __importDefault(require("./vendor.model"));
-const bcrypt = __importStar(require("bcrypt"));
+const bcrypt = __importStar(require("bcryptjs"));
 const jwt = __importStar(require("jsonwebtoken"));
 class VendorAuthenticationService {
     constructor() {

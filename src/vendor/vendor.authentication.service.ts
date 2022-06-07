@@ -2,7 +2,7 @@ import UserWithThatEmailAlreadyExistsException from "../excpetions/userWithThatE
 import TokenData from "../interfaces/takenData.interface";
 import CreatevendorDto from "./createvendor.dto";
 import VendorModel from "./vendor.model";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import Ivendor from "./vendor.interface";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";

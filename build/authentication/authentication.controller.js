@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bcrypt = __importStar(require("bcrypt"));
+const bcrypt = __importStar(require("bcryptjs"));
 const express_1 = require("express");
 const jwt = __importStar(require("jsonwebtoken"));
 const wrongCredentialsException_1 = __importDefault(require("../excpetions/wrongCredentialsException"));

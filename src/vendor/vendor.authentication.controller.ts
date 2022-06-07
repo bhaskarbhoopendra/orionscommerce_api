@@ -3,7 +3,7 @@ import LogInDto from "../authentication/login.dto";
 import Controller from "../interfaces/controller.interface";
 import CreatevendorDto from "./createvendor.dto";
 import VendorAuthenticationService from "./vendor.authentication.service";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import VendorModel from "./vendor.model";
 import WrongCredentialsException from "../excpetions/wrongCredentialsException";
