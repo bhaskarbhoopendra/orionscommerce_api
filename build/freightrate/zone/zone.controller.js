@@ -38,6 +38,7 @@ class ZoneController {
         this.getAllZone = async (request, response) => {
             try {
                 const zone = await this.zoneRepository.getAllZone();
+                console.log(zone.length);
                 response.send(zone);
             }
             catch (error) {
@@ -54,12 +55,25 @@ class ZoneController {
                 return error;
             }
         };
+        this.getZoneById = async (request, response) => {
+            const zoneId = request.body.id;
+            try {
+                const zoneData = await this.zoneRepository.zoneById(zoneId);
+                console.log(zoneData);
+                response.send(zoneData);
+            }
+            catch (error) {
+                return error;
+            }
+            // response.send("HII")
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.post(`${this.path}/create`, admin_middleware_1.default, this.createZone);
         this.router.put(`${this.path}/update/:id`, admin_middleware_1.default, this.updateZone);
         this.router.get(`${this.path}/get`, admin_middleware_1.default, this.getAllZone);
+        this.router.get(`${this.path}/check/:id`, admin_middleware_1.default, this.getZoneById);
         this.router.delete(`${this.path}/delete/:id`, admin_middleware_1.default, this.deleteZone);
     }
 }

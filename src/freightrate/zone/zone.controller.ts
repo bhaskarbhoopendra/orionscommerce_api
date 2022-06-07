@@ -22,6 +22,9 @@ class ZoneController implements Controller {
       this.updateZone
     );
     this.router.get(`${this.path}/get`, adminMiddleware, this.getAllZone);
+
+    this.router.get(`${this.path}/check/:id`, adminMiddleware, this.getZoneById);
+
     this.router.delete(
       `${this.path}/delete/:id`,
       adminMiddleware,
@@ -57,6 +60,7 @@ class ZoneController implements Controller {
   private getAllZone = async (request: Request, response: Response) => {
     try {
       const zone = await this.zoneRepository.getAllZone();
+      console.log(zone.length);
       response.send(zone);
     } catch (error) {
       return error;
@@ -72,6 +76,21 @@ class ZoneController implements Controller {
       return error;
     }
   };
+
+  private getZoneById = async (request: Request, response: Response) => {
+    const zoneId: string = request.body.id;
+    try {
+      const zoneData: ZoneDTO | any = await this.zoneRepository.zoneById(zoneId);
+      console.log(zoneData);
+      response.send(zoneData);
+
+    } catch (error) {
+      return error;
+    }
+
+    // response.send("HII")
+
+  }
 }
 
 export default ZoneController;
