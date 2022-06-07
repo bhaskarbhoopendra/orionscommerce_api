@@ -10,6 +10,7 @@ import ProductController from "./product/product.controller";
 import UserController from "./user/user.controller";
 import VendorAuthenticationController from "./vendor/vendor.authentication.controller";
 import VendorController from "./vendor/vendor.controller";
+import WarehouseTestController from "./warehouseTest/warehouseTest.controller";
 
 const app = new App([
   new UserController(),
@@ -21,6 +22,7 @@ const app = new App([
   new AdminController(),
   new VendorController(),
   new OrderController(),
+  new WarehouseTestController()
 ]);
 
 app.listen();

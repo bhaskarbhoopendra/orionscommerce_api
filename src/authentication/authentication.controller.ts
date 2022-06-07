@@ -11,12 +11,16 @@ import User from "../user/user.interface";
 import userModel from "../user/user.model";
 import AuthenticationService from "./authentication.service";
 import LogInDto from "./login.dto";
+import createToken from "../util/createtoken";
+import createCookie from "../util/createtoken";
 
 class AuthenticationController implements Controller {
   public path = "/auth";
   public router = Router();
   public authenticationService = new AuthenticationService();
   public user = userModel;
+  createToken = createToken;
+  createCookie = createCookie;
 
   constructor() {
     this.initializeRoutes();
@@ -81,22 +85,5 @@ class AuthenticationController implements Controller {
     response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
     response.sendStatus(200).send("Logged Out");
   };
-
-  private createCookie(tokenData: TokenData) {
-    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
   }
-
-  public createToken(user: User): TokenData {
-    const expiresIn = 60 * 60; // an hour
-    const { JWT_SECRET } = process.env;
-    const dataStoredInToken: DataStoredInToken = {
-      _id: user._id,
-    };
-    return {
-      expiresIn,
-      token: jwt.sign(dataStoredInToken, `${JWT_SECRET}`, { expiresIn }),
-    };
-  }
-}
-
 export default AuthenticationController;

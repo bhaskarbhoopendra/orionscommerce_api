@@ -28,16 +28,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = __importStar(require("bcrypt"));
 const express_1 = require("express");
-const jwt = __importStar(require("jsonwebtoken"));
 const wrongCredentialsException_1 = __importDefault(require("../excpetions/wrongCredentialsException"));
 const user_model_1 = __importDefault(require("../user/user.model"));
 const authentication_service_1 = __importDefault(require("./authentication.service"));
+const createtoken_1 = __importDefault(require("../util/createtoken"));
+const createtoken_2 = __importDefault(require("../util/createtoken"));
 class AuthenticationController {
     constructor() {
         this.path = "/auth";
         this.router = (0, express_1.Router)();
         this.authenticationService = new authentication_service_1.default();
         this.user = user_model_1.default;
+        this.createToken = createtoken_1.default;
+        this.createCookie = createtoken_2.default;
         this.registration = async (request, response, next) => {
             const userData = request.body;
             try {
@@ -81,20 +84,6 @@ class AuthenticationController {
         // validationMiddleware(LogInDto),
         this.loggingIn);
         this.router.post(`${this.path}/logout`, this.loggingOut);
-    }
-    createCookie(tokenData) {
-        return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
-    }
-    createToken(user) {
-        const expiresIn = 60 * 60; // an hour
-        const { JWT_SECRET } = process.env;
-        const dataStoredInToken = {
-            _id: user._id,
-        };
-        return {
-            expiresIn,
-            token: jwt.sign(dataStoredInToken, `${JWT_SECRET}`, { expiresIn }),
-        };
     }
 }
 exports.default = AuthenticationController;
