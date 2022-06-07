@@ -11,6 +11,7 @@ import ProductRepository from "../product/product.repository";
 import authMiddleware from "../middleware/auth.middleware";
 
 class CartController implements Controller {
+
   public path = "/cart";
   public router = Router();
   public cart = CartModel;
