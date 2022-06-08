@@ -17,6 +17,7 @@ const vendor_authentication_controller_1 = __importDefault(require("./vendor/ven
 const vendor_controller_1 = __importDefault(require("./vendor/vendor.controller"));
 const zone_controller_1 = __importDefault(require("./freightrate/zone/zone.controller"));
 const freightRate_controller_1 = __importDefault(require("./freightrate/freightRate.controller"));
+const warehouse_controller_1 = __importDefault(require("./warehouse/warehouse.controller"));
 const app = new app_1.default([
     new user_controller_1.default(),
     new authentication_controller_1.default(),
@@ -30,5 +31,6 @@ const app = new app_1.default([
     new zone_controller_1.default(),
     new pincodetype_controller_1.default(),
     new freightRate_controller_1.default(),
+    new warehouse_controller_1.default()
 ]);
 app.listen();

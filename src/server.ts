@@ -13,6 +13,7 @@ import VendorAuthenticationController from "./vendor/vendor.authentication.contr
 import VendorController from "./vendor/vendor.controller";
 import ZoneController from "./freightrate/zone/zone.controller";
 import FreightRateController from "./freightrate/freightRate.controller";
+import WarehouseController from "./warehouse/warehouse.controller";
 
 const app = new App([
   new UserController(),
@@ -27,6 +28,7 @@ const app = new App([
   new ZoneController(),
   new PincodeTypeController(),
   new FreightRateController(),
+  new WarehouseController()
 ]);
 
 app.listen();
