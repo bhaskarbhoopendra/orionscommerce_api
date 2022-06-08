@@ -1,40 +1,40 @@
-import { ParamsDictionary } from "express-serve-static-core";
-import ZoneDTO from "./zone.dto";
-import IZone from "./zone.interface";
-import zoneModel from "./zone.model";
+import ZoneDto from "./zone.dto";
+import zoneModel from "./zone.model"
+
+
 
 class ZoneRepository {
   public zone = zoneModel;
+  public data: ZoneDto;
   public id: string;
-  public data: any;
 
   constructor() {
     this.createZone(this.data);
-    this.getAllZone();
-    this.zoneById(this.id);
-    this.zoneByIdAndUpdate(this.id, this.data);
-    this.zoneByIdAndDelete(this.id);
+    this.getAllZoneData();
+    this.updateZoneData(this.id, this.data);
+    this.deleteZone(this.id);
+    this.getZoneById(this.id);
+
   }
 
-  public createZone = async (data: IZone): Promise<ZoneDTO> => {
-    return await this.zone.create(data);
-  };
+  createZone = async (zoneData: ZoneDto) => {
+    return await this.zone.create(zoneData);
+  }
 
-  public getAllZone = async () => {
-    return await this.zone.find();
-  };
+  getAllZoneData = async () => {
+    return await this.zone.find({});
+  }
 
-  public zoneById = async (id: string) => {
+  getZoneById = async (id: string) => {
     return await this.zone.findById(id);
-  };
+  }
 
-  public zoneByIdAndUpdate = async (id: string, data: any) => {
-    return this.zone.findByIdAndUpdate(id, data, { new: true });
-  };
-
-  public zoneByIdAndDelete = async (id: string | ParamsDictionary) => {
+  updateZoneData = async (id: string, zoneData: ZoneDto) => {
+    return await this.zone.findByIdAndUpdate(id, zoneData);
+  }
+  deleteZone = async (id: string) => {
     return await this.zone.findByIdAndDelete(id);
-  };
+  }
 }
 
 export default ZoneRepository;

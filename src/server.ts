@@ -13,6 +13,7 @@ import VendorAuthenticationController from "./vendor/vendor.authentication.contr
 import VendorController from "./vendor/vendor.controller";
 import ZoneController from "./freightrate/zone/zone.controller";
 import FreightRateController from "./freightrate/freightRate.controller";
+import zoneController from "./freightrate/zone/zone.controller";
 
 const app = new App([
   new UserController(),

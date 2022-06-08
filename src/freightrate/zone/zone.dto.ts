@@ -1,14 +1,16 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsString, IsNumber } from "class-validator";
 
-class ZoneDTO {
+class ZoneDto {
+
   @IsString()
-  zoneName: string;
+  name: string;
+
+  @IsNumber()
+  maximumDistance: number;
 
   @IsNumber()
   minimumDistance: number;
 
-  @IsNumber()
-  maximumDistance: number;
 }
 
-export default ZoneDTO;
+export default ZoneDto;

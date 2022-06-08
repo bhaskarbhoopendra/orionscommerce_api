@@ -1,12 +1,9 @@
-interface Base {
-  zoneName: string;
-  minimumDistance: number;
-  maximumDistance: number;
-  save(): any;
-}
+interface IZone {
+  id: string,
+  name: string,
+  maximumDistance: number,
+  minimumDistance: number
 
-interface IZone extends Base {
-  id: string;
 }
 
 export default IZone;

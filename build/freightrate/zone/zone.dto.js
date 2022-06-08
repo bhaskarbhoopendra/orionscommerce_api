@@ -7,15 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
-class ZoneDTO {
+class ZoneDto {
 }
 __decorate([
     (0, class_validator_1.IsString)()
-], ZoneDTO.prototype, "zoneName", void 0);
+], ZoneDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)()
-], ZoneDTO.prototype, "minimumDistance", void 0);
+], ZoneDto.prototype, "maximumDistance", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)()
-], ZoneDTO.prototype, "maximumDistance", void 0);
-exports.default = ZoneDTO;
+], ZoneDto.prototype, "minimumDistance", void 0);
+exports.default = ZoneDto;

@@ -7,26 +7,26 @@ const zone_model_1 = __importDefault(require("./zone.model"));
 class ZoneRepository {
     constructor() {
         this.zone = zone_model_1.default;
-        this.createZone = async (data) => {
-            return await this.zone.create(data);
+        this.createZone = async (zoneData) => {
+            return await this.zone.create(zoneData);
         };
-        this.getAllZone = async () => {
-            return await this.zone.find();
+        this.getAllZoneData = async () => {
+            return await this.zone.find({});
         };
-        this.zoneById = async (id) => {
+        this.getZoneById = async (id) => {
             return await this.zone.findById(id);
         };
-        this.zoneByIdAndUpdate = async (id, data) => {
-            return this.zone.findByIdAndUpdate(id, data, { new: true });
+        this.updateZoneData = async (id, zoneData) => {
+            return await this.zone.findByIdAndUpdate(id, zoneData);
         };
-        this.zoneByIdAndDelete = async (id) => {
+        this.deleteZone = async (id) => {
             return await this.zone.findByIdAndDelete(id);
         };
         this.createZone(this.data);
-        this.getAllZone();
-        this.zoneById(this.id);
-        this.zoneByIdAndUpdate(this.id, this.data);
-        this.zoneByIdAndDelete(this.id);
+        this.getAllZoneData();
+        this.updateZoneData(this.id, this.data);
+        this.deleteZone(this.id);
+        this.getZoneById(this.id);
     }
 }
 exports.default = ZoneRepository;
